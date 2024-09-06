@@ -15,17 +15,38 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.transfer.*;
 
 
 /**
- *
- * @author ninic
+ * Klasa koja predstavlja nit koja se koristi za obradu zahteva klijenata.
+ * 
+ * Ova klasa koristi Socket za komunikaciju sa klijentom. Svaki zahtev klijenta se 
+ * obrađuje u posebnoj niti, a odgovori se šalju nazad klijentu preko Posiljalac objekta.
+ * 
  */
 public class ObradaKlijentskihZahteva extends Thread {
 
+    /**
+     * Socket koji se koristi za komunikaciju sa klijentom.
+     */
     Socket socket;
+     /**
+     *Objekat za prijem podataka sa klijenta kao instanca klase Primalac.
+     */
     Primalac primalac;
+    /**
+     * Objekat za slanje podataka klijentu kao instanca klase Posiljalac.
+     */
     Posiljalac posiljalac;
+    /**
+     * Oznaka da li treba prekinuti rad niti.
+     */
     boolean kraj = false;
    
 
+     /**
+     * Konstruktor koji inicijalizuje novi objekat klase ObradaKlijentskihZahteva sa datim parametrom.
+     * Takodje inicijalizuje i atribute posiljalac i primalac te klase sa odgovarajucim parametrom.
+     * 
+     * @param socket Soket koji se koristi za komunikaciju sa klijentom kao instanca klase Socket.
+     */
     public ObradaKlijentskihZahteva(Socket socket) {
 
         this.socket = socket;
@@ -34,6 +55,14 @@ public class ObradaKlijentskihZahteva extends Thread {
 
     }
 
+    
+    /**
+     * Metoda koja obrađuje zahteve klijenata.
+     * 
+     * Ova metoda u petlji čeka na zahteve od klijenata, obrađuje ih prema vrsti operacije i
+     * šalje odgovore nazad klijentima. Ako dođe do greške, ispisuje grešku u log.
+     * 
+     */
     @Override
     public void run() {
 
@@ -228,6 +257,10 @@ public class ObradaKlijentskihZahteva extends Thread {
 
     }
 
+    /**
+     * Prekida rad niti i zatvara Socket vezan za klijenta.
+     * 
+     */
     public void prekini() {
         try {
            

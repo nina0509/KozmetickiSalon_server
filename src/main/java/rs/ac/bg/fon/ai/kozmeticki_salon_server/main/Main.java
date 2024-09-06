@@ -8,11 +8,27 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.forme.ServerskaForma;
 
 
 /**
- *
- * @author ninic
+ * Glavna klasa aplikacije koja pokreće serverski program i sadrzi main metodu.
+ * 
+ * @author Nikolina Baros
  */
 public class Main {
-
+    
+    /**
+     * Podrazumevani konstruktor za klasu Main.
+     * Inicijalizuje klasu bez dodatnih parametara.
+     */
+    public Main() {
+      
+    }
+/**
+     *
+     * Metod koji se prvi izvršava pri pokretanju aplikacije. Poziva se 
+     * Singleton instanca kontrolera serverske aplikacije i otvara se
+     * serverska forma.
+     * 
+     * @param args Argumenti komandne linije (ne koriste se u ovoj aplikaciji).
+     */
     public static void main(String[] args) throws Exception {
         ServerskaForma sf = new ServerskaForma();
         sf.setVisible(true);

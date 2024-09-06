@@ -14,11 +14,26 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.db.DbRepozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.OpstiDomenskiObjekat;
 
 /**
- *
- * @author ninic
+ * Klasa koja pruža generičku implementaciju za rad sa podacima u bazi
+ * koristeći opšti domenski objekat.
+ * 
+ * Ova klasa koristi Statement objekat za izvršavanje SQL upita za različite operacije
+ * kao što su preuzimanje, čuvanje, izmena i brisanje podataka u bazi.
+ * 
+ * 
+ * @author Nikolina Baros
  */
 public class DbRepozitorijumGenericki implements DbRepozitorijum<OpstiDomenskiObjekat> {
 
+    
+     /**
+     * Vraća sve podatke iz baze koji odgovaraju datom parametru i uslovu.
+     * 
+     * @param param Opšti domenski objekat koji sadrži informacije o tabeli i kolonama.
+     * @param uslov Dodatni uslov za filtriranje rezultata (može biti null).
+     * @return Lista objekata tipa OpstiDomenskiObjekat koji odgovaraju pretrazi.
+     * @throws Exception Ako dođe do greške tokom pretrage.
+     */
     @Override
     public List<OpstiDomenskiObjekat> vratiSve(OpstiDomenskiObjekat param, String uslov) throws Exception {
 
@@ -40,6 +55,12 @@ public class DbRepozitorijumGenericki implements DbRepozitorijum<OpstiDomenskiOb
 
     }
 
+      /**
+     * Čuva dati objekat u bazi podataka.
+     * 
+     * @param param Opšti domenski objekat koji sadrži informacije o tabeli i kolonama.
+     * @throws Exception Ako dođe do greške tokom čuvanja.
+     */
     @Override
     public void sacuvaj(OpstiDomenskiObjekat param) throws Exception {
 
@@ -50,6 +71,12 @@ public class DbRepozitorijumGenericki implements DbRepozitorijum<OpstiDomenskiOb
 
     }
 
+     /**
+     * Menja podatke postojećeg objekta u bazi podataka.
+     * 
+     * @param param Opšti domenski objekat sa izmenjenim podacima.
+     * @throws Exception Ako dođe do greške tokom izmene.
+     */
     @Override
     public void izmeni(OpstiDomenskiObjekat param) throws Exception {
 
@@ -61,6 +88,12 @@ public class DbRepozitorijumGenericki implements DbRepozitorijum<OpstiDomenskiOb
 
     }
 
+    /**
+     * Briše dati objekat iz baze podataka.
+     * 
+     * @param param Opšti domenski objekat koji sadrži informacije o tabeli i primarnom ključu.
+     * @throws Exception Ako dođe do greške tokom brisanja.
+     */
     @Override
     public void izbrisi(OpstiDomenskiObjekat param) throws Exception {
 
@@ -71,6 +104,14 @@ public class DbRepozitorijumGenericki implements DbRepozitorijum<OpstiDomenskiOb
         st.close();
     }
 
+    
+    /**
+     * Čuva dati objekat u bazi podataka i vraća njegov primarni ključ.
+     * 
+     * @param param Opšti domenski objekat koji sadrži informacije o tabeli i kolonama.
+     * @return Primarni ključ sačuvanog objekta.
+     * @throws Exception Ako dođe do greške tokom čuvanja.
+     */
     @Override
     public int sacuvajVratiPK(OpstiDomenskiObjekat param) throws Exception {
 
@@ -89,14 +130,6 @@ public class DbRepozitorijumGenericki implements DbRepozitorijum<OpstiDomenskiOb
     }
 
 
-
-    /**
-     *
-     * @param klijent
-     * @return
-     * @throws SQLException
-     */
   
-
 
 }
