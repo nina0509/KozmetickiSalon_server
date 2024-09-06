@@ -8,13 +8,21 @@ import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.konfiguracija.Konfiguracija;
 
 /**
+ * Klasa koja predstavlja korisnički interfejs za konfiguraciju (pregled ili
+ * izmenu) podataka potrebnih za konekciju sa bazom podataka.
  *
- * @author ninic
+ * @author Nikolina Baros
  */
 public class FormaKonfiguracijaBaza extends javax.swing.JDialog {
 
     /**
-     * Creates new form FormaKonfiguracijaBaza
+     * Konstruktor koji kreira novu formu (FormaKonfiguracijaBaza). Ucitava iz
+     * konfiguracionog fajla trenutnu konfiguraciju i prikazuje je na formi.
+     * Takodje, konstruktor inicijalizuje sve potrebne komponente na formi.
+     *
+     * @param parent Roditeljski Frame koji će biti roditelj ovog dijaloga.
+     * @param modal Određuje da li je dijalog modalni (sve dok je otvoren,
+     * korisnik ne može da koristi druge prozore aplikacije).
      */
     public FormaKonfiguracijaBaza(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -145,7 +153,14 @@ public class FormaKonfiguracijaBaza extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Metoda koja se poziva kada se klikne na dugme "Sačuvaj". Ova metoda čita
+     * vrednosti iz tekstualnih polja, čuva ih u konfiguraciju i obaveštava
+     * korisnika o uspehu ili grešci tokom čuvanja parametara.
+     *
+     * @param evt Događaj koji se javlja prilikom akcije (klik na dugme
+     * "Sačuvaj").
+     */
     private void jButton1SacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1SacuvajActionPerformed
 
         String url = jTextFieldURL.getText().trim();

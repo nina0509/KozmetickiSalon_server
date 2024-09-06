@@ -14,7 +14,19 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.konfiguracija.Konfiguracija;
 public class FormaKonfiguracijaPort extends javax.swing.JDialog {
 
     /**
-     * Creates new form FormaKonfiguracijaPort
+     * Klasa koja predstavlja korisnički interfejs za konfiguraciju (pregled ili
+     * izmenu) podataka o portu preko kog se vrsi komunikacija.
+     *
+     * @author Nikolina Baros
+     */
+    /**
+     * Konstruktor koji kreira novu formu (FormaKonfiguracijaPort). Ucitava iz
+     * konfiguracionog fajla trenutnu konfiguraciju i prikazuje je na formi.
+     * Takodje, konstruktor inicijalizuje sve potrebne komponente na formi.
+     *
+     * @param parent Roditeljski Frame koji će biti roditelj ovog dijaloga.
+     * @param modal Određuje da li je dijalog modalni (sve dok je otvoren,
+     * korisnik ne može da koristi druge prozore aplikacije).
      */
     public FormaKonfiguracijaPort(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -113,7 +125,14 @@ public class FormaKonfiguracijaPort extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Metoda koja se poziva kada se klikne na dugme "Sačuvaj". Ova metoda čita
+     * vrednost iz tekstualnog polja, čuva ga u konfiguraciju i obaveštava
+     * korisnika o uspehu ili grešci tokom čuvanja parametara.
+     *
+     * @param evt Događaj koji se javlja prilikom akcije (klik na dugme
+     * "Sačuvaj").
+     */
     private void jButtonSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSacuvajActionPerformed
         int port;
         try {

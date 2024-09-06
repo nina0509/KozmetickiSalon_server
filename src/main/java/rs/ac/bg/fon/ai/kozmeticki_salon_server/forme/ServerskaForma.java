@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.forme;
 
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,28 +12,38 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.modeli.ModelTabeleMenadzer;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.server.Server;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Menadzer;
 
-
 /**
+ * Klasa koja predstavlja glavnu formu za server aplikaciju na kojoj su
+ * prikazani svi prijavljeni menadzeri. Ova klasa nasleđuje JFrame i omogućava
+ * korisnicima da pokrenu i zaustave server, kao i da konfigurišu parametre
+ * konekcije sa bazom podataka i portom.
  *
- * @author ninic
+ *
+ * @author Nikolina Baros
  */
 public class ServerskaForma extends javax.swing.JFrame {
-  
+
+    /**
+     * Instanca Server objekta koji predstavlja server aplikacije.
+     */
     Server server;
 
     /**
-     * Creates new form ServerskaForma
+     * Kreira novu instancu klase ServerskaForma i novu instancu klase Server.
+     * Inicijalizuje sve potrebne komponente i postavlja model tabele za prikaz
+     * svih menadzera. Takodje podesava i vrednost serverske forme u kontroleru
+     * na novu formu.
+     *
+     * @throws Exception ako dođe do greške pri inicijalizaciji.
      */
     public ServerskaForma() throws Exception {
         initComponents();
         jTable1.setModel(new ModelTabeleMenadzer(new ArrayList<>()));
         server = new Server();
-        
-        
-      Controller.getInstance().setSf(this);
-      jButtonZAUSTAVI.setEnabled(false);
-       
-       
+
+        Controller.getInstance().setSf(this);
+        jButtonZAUSTAVI.setEnabled(false);
+
     }
 
     /**
@@ -194,7 +203,12 @@ public class ServerskaForma extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Metoda koja se poziva kada se izabere opcija za konfiguraciju baze
+     * podataka iz menija. Otvara prozor za konfiguraciju baze podataka.
+     *
+     * @param evt Događaj koji se javlja prilikom izbora opcije iz menija.
+     */
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         FormaKonfiguracijaBaza fkb = new FormaKonfiguracijaBaza(this, false);
@@ -202,7 +216,12 @@ public class ServerskaForma extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
+    /**
+     * Metoda koja se poziva kada se izabere opcija za konfiguraciju porta iz
+     * menija. Otvara prozor za konfiguraciju porta.
+     *
+     * @param evt Događaj koji se javlja prilikom izbora opcije iz menija.
+     */
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
         FormaKonfiguracijaPort fkp = new FormaKonfiguracijaPort(this, false);
@@ -210,6 +229,13 @@ public class ServerskaForma extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    /**
+     * Metoda koja se poziva kada se klikne na dugme "Pokreni server". Pokreće
+     * server ako već nije pokrenut i ažurira status servera na formi.
+     *
+     * @param evt Događaj koji se javlja prilikom klika na dugme "Pokreni
+     * server".
+     */
     private void jButtonPOKRENIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPOKRENIActionPerformed
 
         if (server == null || !server.isAlive()) {
@@ -223,6 +249,13 @@ public class ServerskaForma extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonPOKRENIActionPerformed
 
+    /**
+     * Metoda koja se poziva kada se klikne na dugme "Zaustavi server".
+     * Zaustavlja server i ažurira status servera na formi.
+     *
+     * @param evt Događaj koji se javlja prilikom klika na dugme "Zaustavi
+     * server".
+     */
     private void jButtonZAUSTAVIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZAUSTAVIActionPerformed
 
         server.zaustaviServer();
@@ -254,11 +287,10 @@ public class ServerskaForma extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void ucitajUlogovaneMenadzere(List<Menadzer> prijavljeni) {
-       
-        ModelTabeleMenadzer mtm= (ModelTabeleMenadzer)jTable1.getModel();
+
+        ModelTabeleMenadzer mtm = (ModelTabeleMenadzer) jTable1.getModel();
         mtm.setLista(prijavljeni);
         mtm.fireTableDataChanged();
-      
-    
+
     }
 }
