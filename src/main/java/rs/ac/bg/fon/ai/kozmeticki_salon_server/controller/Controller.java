@@ -72,7 +72,7 @@ public class Controller {
     public Menadzer login(Menadzer m) throws Exception {
 
         LoginSO operacija = new LoginSO();
-        operacija.izvrsi(m, null);
+        operacija.izvrsi(m);
         if (operacija.getMenadzer() != null) {
 
             if (menadzeri.contains(operacija.getMenadzer())) {
@@ -118,7 +118,7 @@ public class Controller {
     public List<Klijent> nadjiKlijente(Klijent k) throws Exception {
 
         NadjiKlijenteSO operacija = new NadjiKlijenteSO();
-        operacija.izvrsi(k, null);
+        operacija.izvrsi(k);
 
         return operacija.getKlijenti();
 
@@ -133,7 +133,7 @@ public class Controller {
      */
     public void izbrisiKlijenta(Klijent k) throws Exception {
         IzbrisiKlijentaSO operacija = new IzbrisiKlijentaSO();
-        operacija.izvrsi(k, null);
+        operacija.izvrsi(k);
 
     }
 
@@ -146,7 +146,7 @@ public class Controller {
      */
     public void sacuvajKlijenta(Klijent k) throws Exception {
         ZapamtiKlijentaSO operacija = new ZapamtiKlijentaSO();
-        operacija.izvrsi(k, null);
+        operacija.izvrsi(k);
 
     }
 
@@ -161,7 +161,7 @@ public class Controller {
     public List<Usluga> nadjiUsluge(Usluga u) throws Exception {
 
         NadjiUslugeSO operacija = new NadjiUslugeSO();
-        operacija.izvrsi(u, null);
+        operacija.izvrsi(u);
 
         return operacija.getUsluge();
     }
@@ -175,7 +175,7 @@ public class Controller {
      */
     public void izbrisiUslugu(Usluga u) throws Exception {
         IzbrisiUsluguSO operacija = new IzbrisiUsluguSO();
-        operacija.izvrsi(u, null);
+        operacija.izvrsi(u);
     }
 
     /**
@@ -188,7 +188,7 @@ public class Controller {
     public List<TipUsluge> vratiSveTipoveUsluga() throws Exception {
 
         UcitajListuTipovaUslugaSO operacija = new UcitajListuTipovaUslugaSO();
-        operacija.izvrsi(null, null);
+        operacija.izvrsi(null);
 
         return operacija.getTipoviUsluge();
 
@@ -203,7 +203,7 @@ public class Controller {
      */
     public void sacuvajUslugu(Usluga u) throws Exception {
         ZapamtiUsluguSO operacija = new ZapamtiUsluguSO();
-        operacija.izvrsi(u, null);
+        operacija.izvrsi(u);
     }
 
     /**
@@ -217,7 +217,7 @@ public class Controller {
     public List<Rezervacija> nadjiRezervacije(Rezervacija r) throws Exception {
 
         NadjiRezervacijeSO operacija = new NadjiRezervacijeSO();
-        operacija.izvrsi(r, null);
+        operacija.izvrsi(r);
 
         return operacija.getRezervacije();
 
@@ -234,7 +234,7 @@ public class Controller {
     public List<Popust> ucitajPopuste(Klijent k) throws Exception {
 
         UcitajListuPopustaSO operacija = new UcitajListuPopustaSO();
-        operacija.izvrsi(k, null);
+        operacija.izvrsi(k);
 
         return operacija.getPopusti();
     }
@@ -249,7 +249,7 @@ public class Controller {
     public void dodajRezervaciju(Rezervacija r) throws Exception {
 
         ZapamtiRezervacijuSO operacija = new ZapamtiRezervacijuSO();
-        operacija.izvrsi(r, null);
+        operacija.izvrsi(r);
 
     }
 
@@ -262,7 +262,7 @@ public class Controller {
      */
     public void obrisiRezervaciju(Rezervacija r) throws Exception {
         IzbrisiRezervacijuSO operacija = new IzbrisiRezervacijuSO();
-        operacija.izvrsi(r, null);
+        operacija.izvrsi(r);
     }
 
     /**
@@ -276,7 +276,7 @@ public class Controller {
     public Klijent ucitajKlijenta(Klijent k) throws Exception {
 
         UcitajKlijentaSO operacija = new UcitajKlijentaSO();
-        operacija.izvrsi(k, null);
+        operacija.izvrsi(k);
 
         return operacija.getK();
     }
@@ -291,7 +291,7 @@ public class Controller {
      */
     public Usluga ucitajUslugu(Usluga u) throws Exception {
         UcitajUsluguSO operacija = new UcitajUsluguSO();
-        operacija.izvrsi(u, null);
+        operacija.izvrsi(u);
 
         return operacija.getU();
     }
@@ -306,7 +306,7 @@ public class Controller {
     public List<Usluga> vratiSveUsluge() throws Exception {
 
         UcitajListuUslugaSO operacija = new UcitajListuUslugaSO();
-        operacija.izvrsi(null, null);
+        operacija.izvrsi(null);
 
         return operacija.getUsluge();
 
@@ -322,7 +322,7 @@ public class Controller {
     public List<Klijent> vratiSveKlijente() throws Exception {
 
         UcitajListuKlijenataSO operacija = new UcitajListuKlijenataSO();
-        operacija.izvrsi(null, null);
+        operacija.izvrsi(null);
 
         return operacija.getKlijenti();
 
@@ -338,7 +338,7 @@ public class Controller {
      */
     public Rezervacija ucitajRezervaciju(Rezervacija r) throws Exception {
         UcitajRezervacijuSO operacija = new UcitajRezervacijuSO();
-        operacija.izvrsi(r, null);
+        operacija.izvrsi(r);
 
         return operacija.getR();
 
@@ -392,7 +392,7 @@ public class Controller {
     public List<Statistika> vratiSveStatistike() throws Exception {
 
         UcitajListuStatistikaSO operacija = new UcitajListuStatistikaSO();
-        operacija.izvrsi(null, null);
+        operacija.izvrsi(null);
 
         return operacija.getLista();
 
@@ -408,7 +408,7 @@ public class Controller {
     public void zapamtiStatistike() throws Exception {
 
         ZapamtiStatistikeSO operacija = new ZapamtiStatistikeSO();
-        operacija.izvrsi(null, null);
+        operacija.izvrsi(null);
 
     }
 

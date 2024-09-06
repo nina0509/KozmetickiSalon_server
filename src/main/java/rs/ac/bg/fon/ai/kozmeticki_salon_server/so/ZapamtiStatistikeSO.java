@@ -12,18 +12,33 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaStatistike;
 
 /**
- *
- * @author ninic
+ * Klasa koja predstavlja sistemsku operaciju za čuvanje ili azuriranje statistike za tekucu godinu u bazi podataka.
+ * Nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
+ * 
+ * @author Nikolina Baros
  */
 public class ZapamtiStatistikeSO extends OpstaSO {
 
+     /**
+     * Proverava preduslove za izvršenje operacije.  
+     * Kod ove sistemske operacije, nema nikakvih preduslova pa je telo metode prazno.
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
 
     }
 
+    
+     /**
+     * Kreira statistiku za tekucu godinu na osnovu rezervacija u bazi i izvršava operaciju čuvanja statistike i njenih stavki u bazi podataka. 
+     * 
+     * Ako statistika već postoji u bazi,ažurira njene podatke, u suprotnom čuva novu statistiku.
+     * 
+     * @param param Objekt koji predstavlja statistiku koja treba da se sačuva ili ažurira.
+     * @throws Exception Ako dođe do greške prilikom čuvanja ili ažuriranja statistike.
+     */
     @Override
-    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    protected void izvrsiOperaciju(Object param) throws Exception {
 
       
         List<StavkaRezervacije> stavke = broker.vratiSve(new StavkaRezervacije(), " JOIN rezervacija ON rezervacija.rezervacijaId=stavkarezervacije.rezervacijaId JOIN usluga ON stavkarezervacije.uslugaId=usluga.uslugaId JOIN tipusluge ON usluga.tipId=tipusluge.tipId JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE EXTRACT(YEAR FROM rezervacija.datum)=EXTRACT(YEAR FROM current_date) ORDER BY usluga.uslugaId");

@@ -9,14 +9,25 @@ import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
 
-/**
- *
- * @author ninic
+ /**
+  * Klasa koja predstavlja sistemsku operaciju za pretragu rezervacija u sistemu.
+ * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
+ * 
+ * @author Nikolina Baros
  */
-public class NadjiRezervacijeSO extends OpstaSO {
 
+public class NadjiRezervacijeSO extends OpstaSO {
+/**
+     * Lista rezervacija koja je rezultat pretrage.
+     */
     List<Rezervacija> rezervacije;
 
+     /**
+     * Proverava preduslove za izvršenje operacije pretrage rezervacija.
+     * 
+     * @param param Objekat koji predstavlja rezervaciju za pretragu.
+     * @throws Exception ako param nije null a nije instanca klase Rezervacija.
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
 
@@ -26,8 +37,15 @@ public class NadjiRezervacijeSO extends OpstaSO {
         
     }
 
+     /**
+     * Izvršava operaciju pretrage rezervacija u bazi podataka.
+     * Koristi za pretragu ime klijenta koji je kreirao rezervaciju i datum rezervacije.
+     * 
+     * @param param Objekat koji predstavlja rezervaciju za pretragu.
+     * @throws Exception Ako dođe do greške pri pretrazi rezervacija.
+     */
     @Override
-    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    protected void izvrsiOperaciju(Object param) throws Exception {
 
         Rezervacija r=(Rezervacija)param;
         

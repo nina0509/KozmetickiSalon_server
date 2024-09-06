@@ -7,30 +7,55 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.TipUsluge;
 
-/**
- *
- * @author ninic
+ /**
+ * Klasa koja predstavlja sistemsku operaciju za učitavanje liste svih tipova usluga iz baze.
+ * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
+ * 
+ * @author Nikolina Baros
  */
 public class UcitajListuTipovaUslugaSO extends OpstaSO {
 
+     /**
+     * Lista svih tipova usluge ucitanih iz baze.
+     */
     List<TipUsluge> tipoviUsluge;
 
+    /**
+     * Proverava preduslove za izvršenje operacije.  
+     * Kod ove sistemske operacije, nema nikakvih preduslova pa je telo metode prazno.
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
 
     }
 
+    /**
+     * Izvršava operaciju učitavanja liste svih tipova usluge iz baze podataka. 
+     * 
+     * @param param Objekat koji predstavlja tip usluge za učitavanje(u ovom slucaju je null jer ucitavamo sve tipove usluga).
+     * @throws Exception ako dođe do greške tokom ucitavanja iz baze podataka.
+     */
     @Override
-    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    protected void izvrsiOperaciju(Object param) throws Exception {
 
         tipoviUsluge = broker.vratiSve(new TipUsluge(), null);
 
     }
 
+    /**
+     * Vraca ucitane tipove usluge.
+     * 
+     * @return Lista ucitanih tipova usluga.
+     */
     public List<TipUsluge> getTipoviUsluge() {
         return tipoviUsluge;
     }
 
+    /**
+     * Postavlja ucitane tipove usluge.
+     * 
+     * @param lista Nove ucitani tipovi usluge.
+     */
     public void setTipoviUsluge(List<TipUsluge> tipoviUsluge) {
         this.tipoviUsluge = tipoviUsluge;
     }

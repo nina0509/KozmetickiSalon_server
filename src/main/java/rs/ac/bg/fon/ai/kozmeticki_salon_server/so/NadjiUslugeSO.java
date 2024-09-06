@@ -7,15 +7,25 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
-
-/**
- *
- * @author ninic
+ /**
+  * Klasa koja predstavlja sistemsku operaciju za pretragu usluga u sistemu.
+ * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
+ * 
+ * @author Nikolina Baros
  */
 public class NadjiUslugeSO extends OpstaSO {
 
+    /** 
+     * Lista usluga koja je rezultat pretrage.
+     */
     List<Usluga> usluge;
 
+     /**
+     * Proverava preduslove za izvršenje operacije pretrage usluga.
+     * 
+     * @param param Objekat koji predstavlja uslugu za pretragu.
+     * @throws Exception ako param nije null a nije instanca klase Usluga.
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
 
@@ -25,8 +35,15 @@ public class NadjiUslugeSO extends OpstaSO {
 
     }
 
+     /**
+     * Izvršava operaciju pretrage usluga u bazi podataka.
+     * Koristi za pretragu tip usluge i naziv.
+     * 
+     * @param param Objekat koji predstavlja uslugu za pretragu.
+     * @throws Exception Ako dođe do greške pri pretrazi usluga.
+     */
     @Override
-    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    protected void izvrsiOperaciju(Object param) throws Exception {
 
         Usluga u = (Usluga) param;
         String uslov = " JOIN tipusluge on tipusluge.tipId=usluga.tipId";

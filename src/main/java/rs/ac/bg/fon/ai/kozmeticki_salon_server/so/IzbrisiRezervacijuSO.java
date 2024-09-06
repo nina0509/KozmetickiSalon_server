@@ -7,13 +7,20 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
-
 /**
- *
- * @author ninic
+ * Klasa koja predstavlja sistemsku operaciju za brisanje rezervacije iz sistema.
+ * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
+ * 
+ * @author Nikolina Baros
  */
 public class IzbrisiRezervacijuSO extends OpstaSO {
 
+    /**
+     * Proverava preduslove za izvršenje operacije brisanja rezervacije.
+     * 
+     * @param param Objekat koji predstavlja rezervaciju koja treba da se izbriše.
+     * @throws Exception ako param nije instanca klase Rezervacija ili null
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
         if (param == null || !(param instanceof Rezervacija)) {
@@ -21,8 +28,15 @@ public class IzbrisiRezervacijuSO extends OpstaSO {
         }
     }
 
+     /**
+     * Izvršava operaciju brisanja rezervacije iz baze podataka.
+     * Ova metoda takođe ažurira popuste povezane sa rezervacijom i briše stavke rezervacije.
+     * 
+     * @param param Objekat koji predstavlja rezervaciju koja treba da se izbriše.
+     * @throws Exception ako dođe do greške pri brisanju rezervacije ili ažuriranju popusta.
+     */
     @Override
-    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    protected void izvrsiOperaciju(Object param) throws Exception {
 
         Rezervacija r = (Rezervacija) param;
         List<StavkaRezervacije> sveStavke = r.getStavke();

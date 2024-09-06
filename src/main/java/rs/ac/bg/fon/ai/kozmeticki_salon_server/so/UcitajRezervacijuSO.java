@@ -9,12 +9,25 @@ import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
 
-/**
- *
- * @author ninic
+ /**
+ * Klasa koja predstavlja sistemsku operaciju za učitavanje podataka o rezervaciji.
+ * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
+ * 
+ * @author Nikolina Baros
  */
 public class UcitajRezervacijuSO extends OpstaSO {
+    
+     /**
+     * Objekat klase Rezervacija koji se koristi za cuvanje rezultata učitavanja.
+     */
     Rezervacija r;
+    
+    /**
+     * Proverava preduslove za izvršenje operacije. 
+     * 
+     * @param param Objekat koji predstavlja rezervaciju za učitavanje.
+     * @throws Exception ako je parametar null ili nije instanca klase Rezervacija.
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
        Rezervacija parametar = (Rezervacija) param;
@@ -22,8 +35,16 @@ public class UcitajRezervacijuSO extends OpstaSO {
             throw new Exception("Sistem ne moze da ucita rezervaciju");
         }    }
 
+    
+    /**
+     * Izvršava operaciju učitavanja rezervacije sa njenim stavkama iz baze podataka. 
+     * Postavlja r na ucitanu rezervaciju ili null ako rezervacija nije pronađena.
+     * 
+     * @param param Objekat koji predstavlja rezervaciju za učitavanje.
+     * @throws Exception ako dođe do greške tokom ucitavanja iz baze podataka.
+     */
     @Override
-    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    protected void izvrsiOperaciju(Object param) throws Exception {
 
          
         Rezervacija r1=(Rezervacija)param;
@@ -49,10 +70,21 @@ public class UcitajRezervacijuSO extends OpstaSO {
 
     }
 
+     /**
+     * Vraca ucitanu rezervaciju.
+     * 
+     * @return Ucitana rezervacija.
+     */
     public Rezervacija getR() {
         return r;
     }
 
+    
+      /**
+     * Postavlja ucitanu rezervaciju.
+     * 
+     * @param r Nova ucitana rezervacija.
+     */
     public void setR(Rezervacija r) {
         this.r = r;
     }

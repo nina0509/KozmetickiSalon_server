@@ -7,14 +7,27 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
 
-/**
- *
- * @author ninic
+
+ /**
+  * Klasa koja predstavlja sistemsku operaciju za pretragu klijenata u sistemu.
+ * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
+ * 
+ * @author Nikolina Baros
  */
+
 public class NadjiKlijenteSO extends OpstaSO {
 
+     /**
+     * Lista klijenata koja je rezultat pretrage.
+     */
     List<Klijent> klijenti;
 
+    /**
+     * Proverava preduslove za izvršenje operacije pretrage klijenata.
+     * 
+     * @param param Objekat koji predstavlja klijenta za pretragu.
+     * @throws Exception ako param nije null a nije instanca klase Klijent.
+     */
     @Override
     protected void preduslovi(Object param) throws Exception {
 
@@ -25,8 +38,17 @@ public class NadjiKlijenteSO extends OpstaSO {
         
     }
 
+    /**
+     * Izvršava operaciju pretrage klijenata u bazi podataka.
+     * 
+     * Ako je param null, pretražuju se svi klijenti.
+     * Ako nije null, koristi se kao filter za pretragu klijenata na osnovu imena i prezimena.
+     * 
+     * @param param Objekat koji predstavlja klijenta za pretragu.
+     * @throws Exception ako dođe do greške pri pretrazi klijenata.
+     */
     @Override
-    protected void izvrsiOperaciju(Object param, String kljuc) throws Exception {
+    protected void izvrsiOperaciju(Object param) throws Exception {
 
         Klijent k=(Klijent)param;
         String uslov=null;
