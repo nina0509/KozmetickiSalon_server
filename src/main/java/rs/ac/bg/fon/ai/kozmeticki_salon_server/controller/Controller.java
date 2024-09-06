@@ -18,7 +18,7 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.so.UcitajListuTipovaUslugaSO;
  * Ova klasa koristi Singleton kako bi se obezbedilo da samo jedan primerak
  * Controller-a postoji tokom celokupne aplikacije.
  *
- * @autor Nikolina Baros
+ * @author Nikolina Baros
  */
 public class Controller {
 

@@ -8,9 +8,12 @@ import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.konfiguracija.Konfiguracija;
 
 /**
+ * Klasa koja predstavlja korisnički interfejs za konfiguraciju (pregled ili
+ * izmenu) broja porta.
  *
- * @author ninic
+ * @author Nikolina Baros
  */
+@SuppressWarnings("unused")
 public class FormaKonfiguracijaPort extends javax.swing.JDialog {
 
     /**

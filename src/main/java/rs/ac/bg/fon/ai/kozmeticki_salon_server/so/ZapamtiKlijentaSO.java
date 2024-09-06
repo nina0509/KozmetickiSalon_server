@@ -11,69 +11,72 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.db.impl.DbRepozitor
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
 
 /**
- * Klasa koja predstavlja sistemsku operaciju za čuvanje ili ažuriranje klijenta u bazi podataka.
- * Nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
- * 
+ * Klasa koja predstavlja sistemsku operaciju za čuvanje ili ažuriranje klijenta
+ * u bazi podataka. Nasleđuje klasu OpstaSO i implementira njene metode za
+ * proveru preduslova i izvršenje operacije.
+ *
  * @author Nikolina Baros
  */
-public class ZapamtiKlijentaSO extends OpstaSO{
- 
-  
+public class ZapamtiKlijentaSO extends OpstaSO {
+
     /**
-     * Proverava preduslove za čuvanje ili ažuriranje klijenta. Ako klijent nije validan ili ne ispunjava
-     * preduslove, baca izuzetak.
-     * 
-     * @param param Objekat koji predstavlja klijenta koji treba da se sačuva ili ažurira.
-     * @throws Exception Ako je parametar null ili je bilo sta od atributa prosledjenog parametra  null ili prazan string ili ako broj telefona nije u dobrom formatu.
+     * Podrazumevani konstruktor bez parametara, kreira novu instancu klase
+     * ZapamtiKlijentaSO.
      */
-  @Override
+    public ZapamtiKlijentaSO() {
+    }
+
+    /**
+     * Proverava preduslove za čuvanje ili ažuriranje klijenta. Ako klijent nije
+     * validan ili ne ispunjava preduslove, baca izuzetak.
+     *
+     * @param param Objekat koji predstavlja klijenta koji treba da se sačuva
+     * ili ažurira.
+     * @throws Exception Ako je parametar null ili je bilo sta od atributa
+     * prosledjenog parametra null ili prazan string ili ako broj telefona nije
+     * u dobrom formatu.
+     */
+    @Override
     protected void preduslovi(Object param) throws Exception {
 
         Klijent k = (Klijent) param;
-        if (k==null || k.getIme().isBlank() || k.getIme() == null || k.getPrezime().isBlank() || k.getPrezime() == null || k.getBrTel().isBlank() || k.getBrTel() == null || k.getDatRodj() == null) {
+        if (k == null || k.getIme().isBlank() || k.getIme() == null || k.getPrezime().isBlank() || k.getPrezime() == null || k.getBrTel().isBlank() || k.getBrTel() == null || k.getDatRodj() == null) {
             throw new Exception("Sistem ne moze da zapamti klijenta");
         }
-        
-        String regex= "^(\\+\\d{1,3})?0?6[0-9]\\d{6,7}$";
+
+        String regex = "^(\\+\\d{1,3})?0?6[0-9]\\d{6,7}$";
         k.setBrTel(k.getBrTel().replace(" ", ""));
-        if(!k.getBrTel().matches(regex) || k.getDatRodj().after(new Date()))
-        {
-         throw new Exception("Sistem ne moze da zapamti klijenta");
+        if (!k.getBrTel().matches(regex) || k.getDatRodj().after(new Date())) {
+            throw new Exception("Sistem ne moze da zapamti klijenta");
 
         }
 
     }
 
-    
     /**
-     * Izvršava operaciju čuvanja ili ažuriranja klijenta u bazi podataka. Ako klijent već postoji u bazi,
-     * ažurira njegove podatke, u suprotnom čuva novog klijenta.
-     * 
-     * @param param Objekt koji predstavlja klijenta koji treba da se sačuva ili ažurira.
-     * @throws Exception Ako dođe do greške prilikom čuvanja ili ažuriranja klijenta.
+     * Izvršava operaciju čuvanja ili ažuriranja klijenta u bazi podataka. Ako
+     * klijent već postoji u bazi, ažurira njegove podatke, u suprotnom čuva
+     * novog klijenta.
+     *
+     * @param param Objekt koji predstavlja klijenta koji treba da se sačuva ili
+     * ažurira.
+     * @throws Exception Ako dođe do greške prilikom čuvanja ili ažuriranja
+     * klijenta.
      */
-  @Override
+    @Override
     protected void izvrsiOperaciju(Object param) throws Exception {
 
-          
-         Klijent k=(Klijent)param;
-         k.setBrTel(k.getBrTel().replace(" ", ""));
-         List<Klijent>klijenti = broker.vratiSve(new Klijent(), " WHERE klijent.klijentId="+k.getKlijentId());
-         
-         if(klijenti.isEmpty())
-         {
-          broker.sacuvaj((Klijent) param);
-         }
-         else
-         {
-         
-          broker.izmeni((Klijent) param);
-         }
-         
-       
+        Klijent k = (Klijent) param;
+        k.setBrTel(k.getBrTel().replace(" ", ""));
+        List<Klijent> klijenti = broker.vratiSve(new Klijent(), " WHERE klijent.klijentId=" + k.getKlijentId());
+
+        if (klijenti.isEmpty()) {
+            broker.sacuvaj((Klijent) param);
+        } else {
+
+            broker.izmeni((Klijent) param);
+        }
 
     }
-    
-    
 
 }

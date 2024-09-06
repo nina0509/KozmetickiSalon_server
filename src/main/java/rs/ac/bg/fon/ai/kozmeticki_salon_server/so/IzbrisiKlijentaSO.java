@@ -6,18 +6,26 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
 
-
 /**
  * Klasa koja predstavlja sistemsku operaciju za brisanje klijenta iz sistema.
- * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
- * 
+ * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru
+ * preduslova i izvršenje operacije.
+ *
  * @author Nikolina Baros
  */
 public class IzbrisiKlijentaSO extends OpstaSO {
 
     /**
+     * Podrazumevani konstruktor bez parametara, kreira novu instancu klase
+     * IzbrisiKlijentaSO.
+     */
+    public IzbrisiKlijentaSO() {
+
+    }
+
+    /**
      * Proverava preduslove za izvršenje operacije brisanja klijenta.
-     * 
+     *
      * @param param Objekat koji predstavlja klijenta koji treba da se izbriše.
      * @throws Exception ako param nije instanca klase Klijent ili je null.
      */
@@ -30,9 +38,9 @@ public class IzbrisiKlijentaSO extends OpstaSO {
 
     }
 
-      /**
+    /**
      * Izvršava operaciju brisanja klijenta iz baze podataka.
-     * 
+     *
      * @param param Objekat koji predstavlja klijenta koji treba da se izbriše.
      * @throws Exception Ako dođe do greške pri brisanju klijenta.
      */

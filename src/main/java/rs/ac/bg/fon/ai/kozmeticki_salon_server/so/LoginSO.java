@@ -4,27 +4,34 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
-
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Menadzer;
 
 /**
- * Klasa koja predstavlja sistemsku operaciju za prijavljivanje menadzera na sistem.
- * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
- * 
+ * Klasa koja predstavlja sistemsku operaciju za prijavljivanje menadzera na
+ * sistem. Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za
+ * proveru preduslova i izvršenje operacije.
+ *
  * @author Nikolina Baros
  */
 public class LoginSO extends OpstaSO {
 
-     /**
-     * Menadzer koji se uspesno ulogovao. 
-     * Ako prijava nije uspesna, ima vrednost null.
+    /**
+     * Podrazumevani konstruktor bez parametara, kreira novu instancu klase
+     * LoginSO.
+     */
+    public LoginSO() {
+
+    }
+    /**
+     * Menadzer koji se uspesno ulogovao. Ako prijava nije uspesna, ima vrednost
+     * null.
      */
     Menadzer menadzer;
-    
+
     /**
      * Proverava preduslove za izvršenje operacije brisanja usluge.
-     * 
+     *
      * @param param Objekat koji predstavlja menadzera koji se prijavljuje.
      * @throws Exception ako param nije instanca klase Menadzer ili je null.
      */
@@ -39,11 +46,13 @@ public class LoginSO extends OpstaSO {
     }
 
     /**
-     * Izvršava operaciju prijave menadzera na sistem.
-     * Postavlja vrednost odgovarajuceg atributa (menadzer) na vrednost prijavljenog menadzera ili null ako je neuspesna prijava.
-     * 
-     * 
-     * @param param Objekat koji predstavlja menadzera koji pokusava da se prijavi.
+     * Izvršava operaciju prijave menadzera na sistem. Postavlja vrednost
+     * odgovarajuceg atributa (menadzer) na vrednost prijavljenog menadzera ili
+     * null ako je neuspesna prijava.
+     *
+     *
+     * @param param Objekat koji predstavlja menadzera koji pokusava da se
+     * prijavi.
      * @throws Exception Ako dođe do greške pri prijavi menadzera.
      */
     @Override
@@ -66,7 +75,7 @@ public class LoginSO extends OpstaSO {
 
     /**
      * Vraca ulogovanog menadzera.
-     * 
+     *
      * @return Ulogovani menadzer.
      */
     public Menadzer getMenadzer() {
@@ -75,13 +84,11 @@ public class LoginSO extends OpstaSO {
 
     /**
      * Postavlja ulogovanog menadzera.
-     * 
+     *
      * @param menadzer Novi ulogovani menadzer.
      */
     public void setMenadzer(Menadzer menadzer) {
         this.menadzer = menadzer;
     }
-    
-    
 
 }

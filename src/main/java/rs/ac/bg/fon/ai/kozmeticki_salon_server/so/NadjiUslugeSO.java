@@ -4,25 +4,33 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
-
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
- /**
-  * Klasa koja predstavlja sistemsku operaciju za pretragu usluga u sistemu.
- * Ova klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
- * 
+
+/**
+ * Klasa koja predstavlja sistemsku operaciju za pretragu usluga u sistemu. Ova
+ * klasa nasleđuje klasu OpstaSO i implementira njene metode za proveru
+ * preduslova i izvršenje operacije.
+ *
  * @author Nikolina Baros
  */
 public class NadjiUslugeSO extends OpstaSO {
 
-    /** 
+    /**
+     * Podrazumevani konstruktor bez parametara, kreira novu instancu klase
+     * NadjiUslugeSO.
+     */
+    public NadjiUslugeSO() {
+    }
+
+    /**
      * Lista usluga koja je rezultat pretrage.
      */
     List<Usluga> usluge;
 
-     /**
+    /**
      * Proverava preduslove za izvršenje operacije pretrage usluga.
-     * 
+     *
      * @param param Objekat koji predstavlja uslugu za pretragu.
      * @throws Exception ako param nije null a nije instanca klase Usluga.
      */
@@ -35,10 +43,10 @@ public class NadjiUslugeSO extends OpstaSO {
 
     }
 
-     /**
-     * Izvršava operaciju pretrage usluga u bazi podataka.
-     * Koristi za pretragu tip usluge i naziv.
-     * 
+    /**
+     * Izvršava operaciju pretrage usluga u bazi podataka. Koristi za pretragu
+     * tip usluge i naziv.
+     *
      * @param param Objekat koji predstavlja uslugu za pretragu.
      * @throws Exception Ako dođe do greške pri pretrazi usluga.
      */
@@ -70,10 +78,20 @@ public class NadjiUslugeSO extends OpstaSO {
 
     }
 
+    /**
+     * Vraca listu usluga koje su rezultat pretrage.
+     *
+     * @return Lista usluga koje su rezultat pretrage.
+     */
     public List<Usluga> getUsluge() {
         return usluge;
     }
 
+    /**
+     * Postavlja listu usluga koje su rezultat pretrage.
+     *
+     * @param usluge Nova lista usluga koje su rezultat pretrage.
+     */
     public void setUsluge(List<Usluga> usluge) {
         this.usluge = usluge;
     }

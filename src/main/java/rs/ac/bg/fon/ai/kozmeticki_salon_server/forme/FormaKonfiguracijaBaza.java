@@ -13,6 +13,7 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.konfiguracija.Konfiguracija;
  *
  * @author Nikolina Baros
  */
+@SuppressWarnings("unused")
 public class FormaKonfiguracijaBaza extends javax.swing.JDialog {
 
     /**

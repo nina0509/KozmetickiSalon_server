@@ -21,6 +21,7 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Menadzer;
  *
  * @author Nikolina Baros
  */
+@SuppressWarnings("unused")
 public class ServerskaForma extends javax.swing.JFrame {
 
     /**
@@ -286,6 +287,13 @@ public class ServerskaForma extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Metoda koja uzima prosledjenu listu prijavljenih menadzera i upisuje je u
+     * tabelu a zatim je osvezava.
+     *
+     * @param prijavljeni Lista prijavljenih menadzera.
+     *
+     */
     public void ucitajUlogovaneMenadzere(List<Menadzer> prijavljeni) {
 
         ModelTabeleMenadzer mtm = (ModelTabeleMenadzer) jTable1.getModel();

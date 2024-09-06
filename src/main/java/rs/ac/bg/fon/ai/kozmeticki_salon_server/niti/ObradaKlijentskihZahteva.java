@@ -13,13 +13,13 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.controller.Controller;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.transfer.*;
 
-
 /**
  * Klasa koja predstavlja nit koja se koristi za obradu zahteva klijenata.
- * 
- * Ova klasa koristi Socket za komunikaciju sa klijentom. Svaki zahtev klijenta se 
- * obrađuje u posebnoj niti, a odgovori se šalju nazad klijentu preko Posiljalac objekta.
- * 
+ *
+ * Ova klasa koristi Socket za komunikaciju sa klijentom. Svaki zahtev klijenta
+ * se obrađuje u posebnoj niti, a odgovori se šalju nazad klijentu preko
+ * Posiljalac objekta.
+ *
  */
 public class ObradaKlijentskihZahteva extends Thread {
 
@@ -27,8 +27,8 @@ public class ObradaKlijentskihZahteva extends Thread {
      * Socket koji se koristi za komunikaciju sa klijentom.
      */
     Socket socket;
-     /**
-     *Objekat za prijem podataka sa klijenta kao instanca klase Primalac.
+    /**
+     * Objekat za prijem podataka sa klijenta kao instanca klase Primalac.
      */
     Primalac primalac;
     /**
@@ -39,13 +39,14 @@ public class ObradaKlijentskihZahteva extends Thread {
      * Oznaka da li treba prekinuti rad niti.
      */
     boolean kraj = false;
-   
 
-     /**
-     * Konstruktor koji inicijalizuje novi objekat klase ObradaKlijentskihZahteva sa datim parametrom.
-     * Takodje inicijalizuje i atribute posiljalac i primalac te klase sa odgovarajucim parametrom.
-     * 
-     * @param socket Soket koji se koristi za komunikaciju sa klijentom kao instanca klase Socket.
+    /**
+     * Konstruktor koji inicijalizuje novi objekat klase
+     * ObradaKlijentskihZahteva sa datim parametrom. Takodje inicijalizuje i
+     * atribute posiljalac i primalac te klase sa odgovarajucim parametrom.
+     *
+     * @param socket Soket koji se koristi za komunikaciju sa klijentom kao
+     * instanca klase Socket.
      */
     public ObradaKlijentskihZahteva(Socket socket) {
 
@@ -55,13 +56,13 @@ public class ObradaKlijentskihZahteva extends Thread {
 
     }
 
-    
     /**
      * Metoda koja obrađuje zahteve klijenata.
-     * 
-     * Ova metoda u petlji čeka na zahteve od klijenata, obrađuje ih prema vrsti operacije i
-     * šalje odgovore nazad klijentima. Ako dođe do greške, ispisuje grešku u log.
-     * 
+     *
+     * Ova metoda u petlji čeka na zahteve od klijenata, obrađuje ih prema vrsti
+     * operacije i šalje odgovore nazad klijentima. Ako dođe do greške, ispisuje
+     * grešku u log.
+     *
      */
     @Override
     public void run() {
@@ -80,7 +81,7 @@ public class ObradaKlijentskihZahteva extends Thread {
                         Menadzer m = (Menadzer) zahtev.getParametar();
                         m = Controller.getInstance().login(m);
                         odgovor.setOdgovor(m);
-                        
+
                         break;
 
                     case UCITAJ_KLIJENTA:
@@ -151,8 +152,8 @@ public class ObradaKlijentskihZahteva extends Thread {
                         List<TipUsluge> tipovi = Controller.getInstance().vratiSveTipoveUsluga();
                         odgovor.setOdgovor(tipovi);
                         break;
-                        
-                         case UCITAJ_SVE_STATISTIKE:
+
+                    case UCITAJ_SVE_STATISTIKE:
                         List<Statistika> stat = Controller.getInstance().vratiSveStatistike();
                         odgovor.setOdgovor(stat);
                         break;
@@ -173,7 +174,7 @@ public class ObradaKlijentskihZahteva extends Thread {
                         List<Rezervacija> rezervacije = Controller.getInstance().nadjiRezervacije(pretraga);
                         odgovor.setOdgovor(rezervacije);
                         break;
-                        
+
                     case UCITAJ_REZERVACIJU:
                        try {
                         Rezervacija nadjiRez = (Rezervacija) zahtev.getParametar();
@@ -182,8 +183,8 @@ public class ObradaKlijentskihZahteva extends Thread {
                     } catch (Exception e) {
                         odgovor.setOdgovor(e);
                     }
-                       
-                       break;
+
+                    break;
                     case UCITAJ_LISTU_POPUSTA:
                         Klijent k = (Klijent) zahtev.getParametar();
                         List<Popust> popusti = Controller.getInstance().ucitajPopuste(k);
@@ -224,19 +225,20 @@ public class ObradaKlijentskihZahteva extends Thread {
                     }
 
                     break;
-                    
+
                     case LOGOUT:
-                        
+
                         Menadzer m1 = (Menadzer) zahtev.getParametar();
                         boolean uspeh = Controller.getInstance().logout(m1);
                         odgovor.setOdgovor(uspeh);
-                        if(uspeh)prekini();
+                        if (uspeh) {
+                            prekini();
+                        }
                         break;
-                        
-                        
-                         case ZAPAMTI_STATISTIKE:
+
+                    case ZAPAMTI_STATISTIKE:
                          try {
-                        
+
                         Controller.getInstance().zapamtiStatistike();
                         odgovor.setOdgovor(null);
                     } catch (Exception e) {
@@ -259,21 +261,17 @@ public class ObradaKlijentskihZahteva extends Thread {
 
     /**
      * Prekida rad niti i zatvara Socket vezan za klijenta.
-     * 
+     *
      */
     public void prekini() {
         try {
-           
+
             kraj = true;
-            interrupt(); 
+            interrupt();
             socket.close();
         } catch (IOException ex) {
-          //  Logger.getLogger(ObradaKlijentskihZahteva.class.getName()).log(Level.SEVERE, null, ex);
+            //  Logger.getLogger(ObradaKlijentskihZahteva.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
-    
-    
 
 }

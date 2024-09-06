@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
-
 import java.util.Date;
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Popust;
@@ -12,48 +11,60 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
 
 /**
- * Klasa koja predstavlja sistemsku operaciju za čuvanje ili ažuriranje rezervacije u bazi podataka.
- * Nasleđuje klasu OpstaSO i implementira njene metode za proveru preduslova i izvršenje operacije.
- * 
+ * Klasa koja predstavlja sistemsku operaciju za čuvanje ili ažuriranje
+ * rezervacije u bazi podataka. Nasleđuje klasu OpstaSO i implementira njene
+ * metode za proveru preduslova i izvršenje operacije.
+ *
  * @author Nikolina Baros
  */
 public class ZapamtiRezervacijuSO extends OpstaSO {
 
-    
     /**
-     * Proverava preduslove za čuvanje ili ažuriranje rezervacije. Ako rezervacija nije validna ili ne ispunjava
-     * preduslove, baca izuzetak.
-     * 
-     * @param param Objekat koji predstavlja rezervaciju koja treba da se sačuva ili ažurira.
-     * @throws Exception  Ako je rezervacija null, klijent koji je napravio rezervaciju je null, rezervacija nema nijednu stavku ili ako je cena negativan broj.
+     * Podrazumevani konstruktor bez parametara, kreira novu instancu klase
+     * ZapamtiRezervacijuSO.
+     */
+    public ZapamtiRezervacijuSO() {
+    }
+
+    /**
+     * Proverava preduslove za čuvanje ili ažuriranje rezervacije. Ako
+     * rezervacija nije validna ili ne ispunjava preduslove, baca izuzetak.
+     *
+     * @param param Objekat koji predstavlja rezervaciju koja treba da se sačuva
+     * ili ažurira.
+     * @throws Exception Ako je rezervacija null, klijent koji je napravio
+     * rezervaciju je null, rezervacija nema nijednu stavku ili ako je cena
+     * negativan broj.
      */
     @Override
     protected void preduslovi(Object param) throws Exception {
 
         Rezervacija r = (Rezervacija) param;
         //r.getDatum().before(new Date()) ||
-        if ( r.getKlijent() == null || r.getStavke().isEmpty() || r.getUkupnaCena() <= 0) {
+        if (r.getKlijent() == null || r.getStavke().isEmpty() || r.getUkupnaCena() <= 0) {
             throw new Exception("Sistem ne moze da zapamti rezervaciju");
         }
-        
-        
 
     }
 
     /**
-     * Izvršava operaciju čuvanja ili ažuriranja rezervacije i njenih stavki u bazi podataka. 
-     * 
-     * Ako rezervacija već postoji u bazi,ažurira njene podatke, u suprotnom čuva novu rezervaciju.
-     * 
-     * @param param Objekt koji predstavlja rezervaciju koja treba da se sačuva ili ažurira.
-     * @throws Exception Ako dođe do greške prilikom čuvanja ili ažuriranja rezervacije.
+     * Izvršava operaciju čuvanja ili ažuriranja rezervacije i njenih stavki u
+     * bazi podataka.
+     *
+     * Ako rezervacija već postoji u bazi,ažurira njene podatke, u suprotnom
+     * čuva novu rezervaciju.
+     *
+     * @param param Objekt koji predstavlja rezervaciju koja treba da se sačuva
+     * ili ažurira.
+     * @throws Exception Ako dođe do greške prilikom čuvanja ili ažuriranja
+     * rezervacije.
      */
     @Override
     protected void izvrsiOperaciju(Object param) throws Exception {
 
         Rezervacija r = (Rezervacija) param;
-       
-        if (r.getRezervacijaId()==-1) {
+
+        if (r.getRezervacijaId() == -1) {
             izvrsiOperacijuZaDodavanje(r);
         } else {
             izvrsiOperacijuZaAzuriranje(r);
@@ -62,14 +73,15 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
     }
 
     /**
-     * Izvršava operaciju čuvanja nove rezervacije i njenih stavki u bazi podataka. 
-     * Takodje vrsi i azuriranje tabele sa Popustima u skladu sa promenama.
-     * 
+     * Izvršava operaciju čuvanja nove rezervacije i njenih stavki u bazi
+     * podataka. Takodje vrsi i azuriranje tabele sa Popustima u skladu sa
+     * promenama.
+     *
      * @param param Objekt koji predstavlja rezervaciju koja treba da se sačuva.
      * @throws Exception Ako dođe do greške prilikom čuvanja rezervacije.
      */
     private void izvrsiOperacijuZaDodavanje(Rezervacija r) throws Exception {
-        
+
         java.sql.Date datum = new java.sql.Date(r.getDatum().getTime());
         List<StavkaRezervacije> sveStavke = broker.vratiSve(new StavkaRezervacije(), " JOIN rezervacija ON rezervacija.rezervacijaId=stavkarezervacije.rezervacijaId JOIN usluga ON stavkarezervacije.uslugaId=usluga.uslugaId JOIN tipusluge ON usluga.tipId=tipusluge.tipId JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE rezervacija.datum='" + datum + "'");
 
@@ -122,12 +134,13 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
         }
     }
 
-    
-     /**
-     * Izvršava operaciju azuriranja rezervacije i njenih stavki u bazi podataka. 
-     * Takodje vrsi i azuriranje tabele sa Popustima u skladu sa promenama.
-     * 
-     * @param param Objekt koji predstavlja rezervaciju koja treba da se azurira.
+    /**
+     * Izvršava operaciju azuriranja rezervacije i njenih stavki u bazi
+     * podataka. Takodje vrsi i azuriranje tabele sa Popustima u skladu sa
+     * promenama.
+     *
+     * @param param Objekt koji predstavlja rezervaciju koja treba da se
+     * azurira.
      * @throws Exception Ako dođe do greške prilikom azuriranja rezervacije.
      */
     private void izvrsiOperacijuZaAzuriranje(Rezervacija r) throws Exception {
@@ -192,7 +205,7 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
             }
 
         }
-        
+
         if (r.isPojavljivanje() == true && RezBaza.isPojavljivanje() == false) {
 
             for (StavkaRezervacije s : r.getStavke()) {
@@ -212,7 +225,7 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
 
     }
 
-     /**
+    /**
      * Podesava iznos popusta na osnovu broja dolazaka.
      */
     private void prilagodiISacuvajPopust(Popust p) throws Exception {
