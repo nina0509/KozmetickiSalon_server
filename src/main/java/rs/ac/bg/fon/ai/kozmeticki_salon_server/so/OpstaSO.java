@@ -22,7 +22,7 @@ public abstract class OpstaSO {
     /**
      * Repozitorijum koji se koristi za pristup bazi podataka.
      */
-    protected final Repozitorijum broker;
+    protected Repozitorijum broker;
 
     /**
      * Konstruktor koji inicijalizuje broker kao instancu klase
@@ -30,6 +30,11 @@ public abstract class OpstaSO {
      */
     public OpstaSO() {
         this.broker = new DbRepozitorijumGenericki();
+    }
+    
+    public OpstaSO(Repozitorijum broker)
+    {
+       this.broker=broker;
     }
 
     /**
