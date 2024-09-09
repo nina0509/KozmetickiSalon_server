@@ -4,6 +4,7 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
@@ -21,6 +22,16 @@ public class IzbrisiUsluguSO extends OpstaSO {
      */
     public IzbrisiUsluguSO() {
 
+    }
+    
+    /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * IzbrisiUsluguSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+     public IzbrisiUsluguSO(Repozitorijum broker) {
+     this.broker=broker;
     }
 
     /**
