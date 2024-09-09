@@ -13,16 +13,20 @@ import junit.framework.TestCase;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.db.impl.DbRepozitorijumGenericki;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
+import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Popust;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
+import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.TipUsluge;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
@@ -75,15 +79,89 @@ public class IzbrisiRezervacijuSOTest extends TestCase {
     }
 
     @Test
-    public void testUspesnaOperacija() throws Exception {
+    public void testUspesnaOperacijaIzmenaPopusta() throws Exception {
 
-        r = new Rezervacija(1, new Date(), 120, true, new Klijent());
+      Klijent klijent = new Klijent();
+        klijent.setKlijentId(1);
+
+        Usluga usluga = new Usluga();
+        usluga.setUslugaId(1);
+
+        StavkaRezervacije stavka1 = new StavkaRezervacije();
+        stavka1.setRBStavke(1);
+        stavka1.setUsluga(usluga);
+
+        List<StavkaRezervacije> stavke = new ArrayList<>();
+        stavke.add(stavka1);
+
+        r = new Rezervacija();
+        r.setRezervacijaId(1);
+        r.setKlijent(klijent);
+        r.setStavke(stavke);
+        
+        Popust popust = new Popust();
+        popust.setBrojRezUsluge(6);
+        popust.setPopust(5);
+        
+        List<Popust> popusti=new ArrayList<>();
+        popusti.add(popust);
+        
+        when(mockRepozitorijum.vratiSve(any(Popust.class), anyString())).thenReturn(popusti);
+
+        doNothing().when(mockRepozitorijum).izbrisi((StavkaRezervacije) stavka1);
         doNothing().when(mockRepozitorijum).izbrisi((Rezervacija) r);
+        popust.setBrojRezUsluge(6);
+        doNothing().when(mockRepozitorijum).izmeni((Popust) popust);
+        doNothing().when(mockRepozitorijum).izbrisi((Rezervacija) r);
+       
         izbrisiRezervacijuSO.izvrsi(r);
-        // Proveri da li je pozvana metoda izbrisi u repozitorijumu
         verify(mockRepozitorijum, times(1)).izbrisi((Rezervacija) r);
-
+        verify(mockRepozitorijum, times(1)).izbrisi((StavkaRezervacije) stavka1);
+        verify(mockRepozitorijum, times(1)).izmeni((Popust) popust);
+        
+        
     }
+    
+     @Test
+    public void testUspesnaOperacijaBrisanjePopusta() throws Exception {
+ 
+        Klijent klijent = new Klijent();
+        klijent.setKlijentId(1);
+
+        Usluga usluga = new Usluga();
+        usluga.setUslugaId(1);
+
+        StavkaRezervacije stavka1 = new StavkaRezervacije();
+        stavka1.setRBStavke(1);
+        stavka1.setUsluga(usluga);
+
+        List<StavkaRezervacije> stavke = new ArrayList<>();
+        stavke.add(stavka1);
+
+        r.setRezervacijaId(1);
+        r.setKlijent(klijent);
+        r.setStavke(stavke);
+
+        Popust popust = new Popust();
+        popust.setBrojRezUsluge(1);  
+        List<Popust> popusti=new ArrayList<>();
+        popusti.add(popust);
+       
+        when(mockRepozitorijum.vratiSve(any(Popust.class), anyString())).thenReturn(popusti);
+
+        doNothing().when(mockRepozitorijum).izbrisi((StavkaRezervacije) stavka1);
+        doNothing().when(mockRepozitorijum).izbrisi((Rezervacija) r);
+        doNothing().when(mockRepozitorijum).izbrisi((Popust) popust);
+        doNothing().when(mockRepozitorijum).izbrisi((Rezervacija) r);
+       
+        izbrisiRezervacijuSO.izvrsi(r);
+        verify(mockRepozitorijum, times(1)).izbrisi((Rezervacija) r);
+        verify(mockRepozitorijum, times(1)).izbrisi((StavkaRezervacije) stavka1);
+        popust.setBrojRezUsluge(0);
+        verify(mockRepozitorijum, times(1)).izbrisi((Popust) popust);
+    
+}
+   
 
     @Test
     public void testGreskaUBaziPrilikomBrisanjaRezervacije() throws Exception {
