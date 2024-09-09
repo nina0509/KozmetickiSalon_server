@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Popust;
 
@@ -23,6 +24,17 @@ public class UcitajListuPopustaSO extends OpstaSO {
      */
     public UcitajListuPopustaSO() {
     }
+    
+    /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * UcitajListuPopustaSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public UcitajListuPopustaSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
     /**
      * Lista svih popusta ucitanih iz baze.
      */
@@ -34,6 +46,10 @@ public class UcitajListuPopustaSO extends OpstaSO {
      */
     @Override
     protected void preduslovi(Object param) throws Exception {
+
+        if (param == null || !(param instanceof Klijent)) {
+            throw new Exception("Sistem ne moze da ucita listu popusta");
+        }
 
     }
 

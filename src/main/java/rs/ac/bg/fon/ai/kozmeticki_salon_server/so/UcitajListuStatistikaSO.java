@@ -6,6 +6,7 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.ArrayList;
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Statistika;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaStatistike;
 
@@ -23,6 +24,17 @@ public class UcitajListuStatistikaSO extends OpstaSO {
      * UcitajListuStatistikaSO.
      */
     public UcitajListuStatistikaSO() {
+    }
+    
+      /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * UcitajListuStatistikaSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public UcitajListuStatistikaSO(Repozitorijum broker) {
+         this.broker=broker;
     }
     /**
      * Lista svih statistika ucitanih iz baze.

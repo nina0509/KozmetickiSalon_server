@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.TipUsluge;
 
 /**
@@ -21,6 +22,16 @@ public class UcitajListuTipovaUslugaSO extends OpstaSO {
      * UcitajListuTipovaUslugaSO.
      */
     public UcitajListuTipovaUslugaSO() {
+    }
+     /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * UcitajListuTipovaUslugaSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public UcitajListuTipovaUslugaSO(Repozitorijum broker) {
+         this.broker=broker;
     }
     /**
      * Lista svih tipova usluge ucitanih iz baze.
