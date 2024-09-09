@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
 
@@ -24,6 +25,16 @@ public class UcitajRezervacijuSO extends OpstaSO {
     public UcitajRezervacijuSO() {
     }
     /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * UcitajRezervacijuSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public UcitajRezervacijuSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
+    /**
      * Objekat klase Rezervacija koji se koristi za cuvanje rezultata
      * učitavanja.
      */
@@ -38,8 +49,8 @@ public class UcitajRezervacijuSO extends OpstaSO {
      */
     @Override
     protected void preduslovi(Object param) throws Exception {
-        Rezervacija parametar = (Rezervacija) param;
-        if (parametar == null) {
+      
+        if (param == null || !(param instanceof Rezervacija)) {
             throw new Exception("Sistem ne moze da ucita rezervaciju");
         }
     }
@@ -64,8 +75,9 @@ public class UcitajRezervacijuSO extends OpstaSO {
             r = null;
         } else {
 
+            
+            List<StavkaRezervacije> stavke = broker.vratiSve(new StavkaRezervacije(), " JOIN rezervacija ON rezervacija.rezervacijaId=stavkarezervacije.rezervacijaId JOIN usluga ON stavkarezervacije.uslugaId=usluga.uslugaId JOIN tipusluge ON usluga.tipId=tipusluge.tipId JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE rezervacija.rezervacijaId=" + lista.get(0).getRezervacijaId());
             r = lista.get(0);
-            List<StavkaRezervacije> stavke = broker.vratiSve(new StavkaRezervacije(), " JOIN rezervacija ON rezervacija.rezervacijaId=stavkarezervacije.rezervacijaId JOIN usluga ON stavkarezervacije.uslugaId=usluga.uslugaId JOIN tipusluge ON usluga.tipId=tipusluge.tipId JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE rezervacija.rezervacijaId=" + r.getRezervacijaId());
             r.setStavke(stavke);
 
         }

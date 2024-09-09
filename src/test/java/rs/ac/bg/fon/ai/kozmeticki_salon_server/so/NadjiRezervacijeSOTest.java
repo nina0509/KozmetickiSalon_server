@@ -92,11 +92,13 @@ public class NadjiRezervacijeSOTest extends TestCase {
 
         String uslov = " JOIN klijent ON klijent.klijentId=rezervacija.klijentId";
         uslov += " ORDER BY rezervacija.datum DESC";
+        String uslov1 = " JOIN rezervacija ON rezervacija.rezervacijaId=stavkarezervacije.rezervacijaId JOIN usluga ON stavkarezervacije.uslugaId=usluga.uslugaId JOIN tipusluge ON usluga.tipId=tipusluge.tipId JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE rezervacija.rezervacijaId=" + r.getRezervacijaId();
 
         when(mockRepozitorijum.vratiSve(new Rezervacija(), uslov)).thenReturn(rez);
         nadjiRezervacijeSO.izvrsi(null);
 
         verify(mockRepozitorijum, times(1)).vratiSve(new Rezervacija(), uslov);
+        verify(mockRepozitorijum, times(1)).vratiSve(new StavkaRezervacije(), uslov1);
         assertEquals(r, nadjiRezervacijeSO.getRezervacije().get(0));
 
     }
@@ -119,6 +121,7 @@ public class NadjiRezervacijeSOTest extends TestCase {
         nadjiRezervacijeSO.izvrsi((Rezervacija) r);
 
         verify(mockRepozitorijum, times(1)).vratiSve(new Rezervacija(), uslov);
+        verify(mockRepozitorijum, times(1)).vratiSve(new StavkaRezervacije(), uslov1);
         assertEquals(r, nadjiRezervacijeSO.getRezervacije().get(0));
 
     }
@@ -143,6 +146,7 @@ public class NadjiRezervacijeSOTest extends TestCase {
         nadjiRezervacijeSO.izvrsi((Rezervacija) r);
 
         verify(mockRepozitorijum, times(1)).vratiSve(new Rezervacija(), uslov);
+        verify(mockRepozitorijum, times(1)).vratiSve(new StavkaRezervacije(), uslov1);
         assertEquals(r, nadjiRezervacijeSO.getRezervacije().get(0));
 
     }
@@ -168,6 +172,7 @@ public class NadjiRezervacijeSOTest extends TestCase {
         nadjiRezervacijeSO.izvrsi((Rezervacija) r);
 
         verify(mockRepozitorijum, times(1)).vratiSve(new Rezervacija(), uslov);
+        verify(mockRepozitorijum, times(1)).vratiSve(new StavkaRezervacije(), uslov1);
         assertEquals(r, nadjiRezervacijeSO.getRezervacije().get(0));
 
     }
