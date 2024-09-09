@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
 
 /**
@@ -21,6 +22,17 @@ public class NadjiKlijenteSO extends OpstaSO {
      * NadjiKlijenteSO.
      */
     public NadjiKlijenteSO() {
+    }
+    
+     /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * NadjiKlijenteSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public NadjiKlijenteSO(Repozitorijum broker) {
+         this.broker=broker;
     }
     /**
      * Lista klijenata koja je rezultat pretrage.
@@ -73,7 +85,7 @@ public class NadjiKlijenteSO extends OpstaSO {
                 uslov = " WHERE klijent.prezime LIKE '%" + k.getPrezime() + "%'";
             }
         }
-        System.out.println(uslov);
+      
         klijenti = broker.vratiSve(new Klijent(), uslov);
 
     }

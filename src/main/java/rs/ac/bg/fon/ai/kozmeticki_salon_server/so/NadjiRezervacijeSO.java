@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
 
@@ -23,7 +24,16 @@ public class NadjiRezervacijeSO extends OpstaSO {
      */
     public NadjiRezervacijeSO() {
     }
-
+ /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * NadjiRezervacijeSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public NadjiRezervacijeSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
     /**
      * Lista rezervacija koja je rezultat pretrage.
      */
@@ -77,8 +87,7 @@ public class NadjiRezervacijeSO extends OpstaSO {
             uslov += uslov1;
         }
         uslov += " ORDER BY rezervacija.datum DESC";
-        System.out.println(uslov);
-
+        
         rezervacije = broker.vratiSve(new Rezervacija(), uslov);
 
         for (Rezervacija nova : rezervacije) {

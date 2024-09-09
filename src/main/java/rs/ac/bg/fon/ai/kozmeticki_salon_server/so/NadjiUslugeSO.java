@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
@@ -22,7 +23,16 @@ public class NadjiUslugeSO extends OpstaSO {
      */
     public NadjiUslugeSO() {
     }
-
+/**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * NadjiUslugeSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public NadjiUslugeSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
     /**
      * Lista usluga koja je rezultat pretrage.
      */

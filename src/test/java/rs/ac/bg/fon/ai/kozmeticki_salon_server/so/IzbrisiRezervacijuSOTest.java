@@ -27,111 +27,105 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
  * Klasa koja predstavlja testove sistemske operacije IzbrisiRezervaciju
- * 
+ *
  * @author Nikolina Baros
  */
 public class IzbrisiRezervacijuSOTest extends TestCase {
-    
-     private IzbrisiRezervacijuSO izbrisiRezervacijuSO;
-     Rezervacija r;
-    private Repozitorijum mockRepozitorijum; 
+
+    private IzbrisiRezervacijuSO izbrisiRezervacijuSO;
+    Rezervacija r;
+    private Repozitorijum mockRepozitorijum;
+
     public IzbrisiRezervacijuSOTest(String testName) {
         super(testName);
     }
-    
+
     @Override
     protected void setUp() throws Exception {
-        mockRepozitorijum=mock(DbRepozitorijumGenericki.class);
+        mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         izbrisiRezervacijuSO = new IzbrisiRezervacijuSO(mockRepozitorijum);
-        r=new Rezervacija();
+        r = new Rezervacija();
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
-      izbrisiRezervacijuSO = null;
+        izbrisiRezervacijuSO = null;
         r = null;
-        mockRepozitorijum=null;
+        mockRepozitorijum = null;
     }
-    
-     @Test
+
+    @Test
     public void testPredusloviNullParam() {
-       
+
         Exception exception = assertThrows(Exception.class, () -> {
             izbrisiRezervacijuSO.izvrsi(null);
         });
 
         assertEquals("Sistem ne moze da izbrise rezervaciju", exception.getMessage());
     }
-    
-     @Test
+
+    @Test
     public void testPredusloviDrugaKlasa() {
-       
-       Exception exception = assertThrows(Exception.class, () -> {
+
+        Exception exception = assertThrows(Exception.class, () -> {
             izbrisiRezervacijuSO.izvrsi(new Usluga());
         });
 
         assertEquals("Sistem ne moze da izbrise rezervaciju", exception.getMessage());
     }
-    
-    
-     @Test
+
+    @Test
     public void testUspesnaOperacija() throws Exception {
-        
-         r=new Rezervacija(1, new Date(), 120, true, new Klijent()); 
-        doNothing().when(mockRepozitorijum).izbrisi((Rezervacija)r);  
+
+        r = new Rezervacija(1, new Date(), 120, true, new Klijent());
+        doNothing().when(mockRepozitorijum).izbrisi((Rezervacija) r);
         izbrisiRezervacijuSO.izvrsi(r);
         // Proveri da li je pozvana metoda izbrisi u repozitorijumu
-        verify(mockRepozitorijum, times(1)).izbrisi((Rezervacija)r);
-      
-         
+        verify(mockRepozitorijum, times(1)).izbrisi((Rezervacija) r);
+
     }
-    
+
     @Test
-    public void testGreskaUBaziPrilikomBrisanjaRezervacije() throws Exception{
-     
-          r=new Rezervacija(1, new Date(), 120, true, new Klijent()); 
+    public void testGreskaUBaziPrilikomBrisanjaRezervacije() throws Exception {
+
+        r = new Rezervacija(1, new Date(), 120, true, new Klijent());
 
         // Simuliranje greške prilikom brisanja 
-        doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi((Rezervacija)r);
+        doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi((Rezervacija) r);
 
         //hvatamo izuzetak
         Exception exception = assertThrows(Exception.class, () -> {
-            izbrisiRezervacijuSO.izvrsi((Rezervacija)r);
+            izbrisiRezervacijuSO.izvrsi((Rezervacija) r);
         });
 
         // da li je izuzetak ocekivana poruka
         assertEquals("Greška u bazi", exception.getMessage());
 
         // da li je pozvana metoda izbrisi u repozitorijumu, ali da je bačen izuzetak
-        verify(mockRepozitorijum, times(1)).izbrisi((Rezervacija)r);
+        verify(mockRepozitorijum, times(1)).izbrisi((Rezervacija) r);
     }
-    
-    
-     @Test
-    public void testGreskaUBaziPrilikomBrisanjaStavki() throws Exception{
-     
-          r=new Rezervacija(1, new Date(), 120, true, new Klijent()); 
-          StavkaRezervacije sr=new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 120, null);
-         List<StavkaRezervacije> stavke=new ArrayList<>();
-         stavke.add(sr);
-          r.setStavke(stavke);
-         // Simuliranje greške prilikom brisanja  neke od stavki rezervacija
+
+    @Test
+    public void testGreskaUBaziPrilikomBrisanjaStavki() throws Exception {
+
+        r = new Rezervacija(1, new Date(), 120, true, new Klijent());
+        StavkaRezervacije sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 120, null);
+        List<StavkaRezervacije> stavke = new ArrayList<>();
+        stavke.add(sr);
+        r.setStavke(stavke);
+        // Simuliranje greške prilikom brisanja  neke od stavki rezervacija
         doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi(any(StavkaRezervacije.class));
 
         //hvatamo izuzetak
-       Exception exception = assertThrows(Exception.class, () -> {
-            izbrisiRezervacijuSO.izvrsi((Rezervacija)r);
+        Exception exception = assertThrows(Exception.class, () -> {
+            izbrisiRezervacijuSO.izvrsi((Rezervacija) r);
         });
 
         // da li je izuzetak ocekivana poruka
         assertEquals("Greška u bazi", exception.getMessage());
 
         // da li je pozvana metoda izbrisi u repozitorijumu, ali da je bačen izuzetak
-         verify(mockRepozitorijum, times(1)).izbrisi(any(StavkaRezervacije.class));
+        verify(mockRepozitorijum, times(1)).izbrisi(any(StavkaRezervacije.class));
     }
-    
-    
-    
-    
 
 }

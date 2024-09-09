@@ -21,82 +21,79 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
+ * Klasa koja predstavlja testove sistemske operacije IzbrisiUslugu
  *
- * @author ninic
+ * @author Nikolina Baros
  */
 public class IzbrisiUsluguSOTest extends TestCase {
-    
+
     private IzbrisiUsluguSO izbrisiUsluguSO;
-     Usluga u;
-    private Repozitorijum mockRepozitorijum; 
-    
+    Usluga u;
+    private Repozitorijum mockRepozitorijum;
+
     public IzbrisiUsluguSOTest(String testName) {
         super(testName);
     }
-    
+
     @Override
     protected void setUp() throws Exception {
-          mockRepozitorijum=mock(DbRepozitorijumGenericki.class);
-          izbrisiUsluguSO = new IzbrisiUsluguSO(mockRepozitorijum);
-          u=new Usluga();
+        mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
+        izbrisiUsluguSO = new IzbrisiUsluguSO(mockRepozitorijum);
+        u = new Usluga();
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
-        mockRepozitorijum=null;
-        izbrisiUsluguSO=null;
-        u=null;
+        mockRepozitorijum = null;
+        izbrisiUsluguSO = null;
+        u = null;
     }
 
     @Test
     public void testPredusloviNullParam() {
-       
+
         Exception exception = assertThrows(Exception.class, () -> {
             izbrisiUsluguSO.izvrsi(null);
         });
 
         assertEquals("Sistem ne moze da izbrise uslugu", exception.getMessage());
     }
-    
-     @Test
+
+    @Test
     public void testPredusloviDrugaKlasa() {
-       
-       Exception exception = assertThrows(Exception.class, () -> {
+
+        Exception exception = assertThrows(Exception.class, () -> {
             izbrisiUsluguSO.izvrsi(new Klijent());
         });
 
         assertEquals("Sistem ne moze da izbrise uslugu", exception.getMessage());
     }
-    
+
     @Test
     public void testUspesnaOperacija() throws Exception {
-        
+
         u.setUslugaId(1);
-        doNothing().when(mockRepozitorijum).izbrisi((Usluga)u);  
-        izbrisiUsluguSO.izvrsi((Usluga)u);
-        
-        verify(mockRepozitorijum, times(1)).izbrisi((Usluga)u);
-      
-         
+        doNothing().when(mockRepozitorijum).izbrisi((Usluga) u);
+        izbrisiUsluguSO.izvrsi((Usluga) u);
+
+        verify(mockRepozitorijum, times(1)).izbrisi((Usluga) u);
+
     }
-    
-    
-     @Test
-    public void testGreskaUBaziPrilikomBrisanjaUsluge() throws Exception{
-     
+
+    @Test
+    public void testGreskaUBaziPrilikomBrisanjaUsluge() throws Exception {
+
         u.setUslugaId(1);
 
-        doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi((Usluga)u);
+        doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi((Usluga) u);
 
         Exception exception = assertThrows(Exception.class, () -> {
-            izbrisiUsluguSO.izvrsi((Usluga)u);
+            izbrisiUsluguSO.izvrsi((Usluga) u);
         });
 
         assertEquals("Greška u bazi", exception.getMessage());
 
-        verify(mockRepozitorijum, times(1)).izbrisi((Usluga)u);
+        verify(mockRepozitorijum, times(1)).izbrisi((Usluga) u);
     }
-    
-    
-   
+
 }

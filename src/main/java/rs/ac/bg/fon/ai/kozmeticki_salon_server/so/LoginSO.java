@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Menadzer;
 
 /**
@@ -23,6 +24,15 @@ public class LoginSO extends OpstaSO {
     public LoginSO() {
 
     }
+     /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * LoginSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+    public LoginSO(Repozitorijum broker) {
+        this.broker = broker;
+    }
     /**
      * Menadzer koji se uspesno ulogovao. Ako prijava nije uspesna, ima vrednost
      * null.
@@ -38,7 +48,6 @@ public class LoginSO extends OpstaSO {
     @Override
     protected void preduslovi(Object param) throws Exception {
 
-        Menadzer m = (Menadzer) param;
         if (param == null || !(param instanceof Menadzer)) {
             throw new Exception("Sistem nije ulogovao menadzera");
         }

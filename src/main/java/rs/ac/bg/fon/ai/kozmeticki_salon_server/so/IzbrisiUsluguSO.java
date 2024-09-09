@@ -23,15 +23,15 @@ public class IzbrisiUsluguSO extends OpstaSO {
     public IzbrisiUsluguSO() {
 
     }
-    
+
     /**
-     * Konstruktor sa parametrima, kreira novu instancu klase
-     * IzbrisiUsluguSO i postavlja broker na zadatu vrednost.
-     * 
+     * Konstruktor sa parametrima, kreira novu instancu klase IzbrisiUsluguSO i
+     * postavlja broker na zadatu vrednost.
+     *
      * @param broker Novi broker baze podataka.
      */
-     public IzbrisiUsluguSO(Repozitorijum broker) {
-     this.broker=broker;
+    public IzbrisiUsluguSO(Repozitorijum broker) {
+        this.broker = broker;
     }
 
     /**

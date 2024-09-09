@@ -20,81 +20,79 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
 
 /**
  * Klasa koja predstavlja testove sistemske operacije IzbrisiKlijenta
- * 
+ *
  * @author Nikolina Baros
  */
 public class IzbrisiKlijentaSOTest extends TestCase {
 
-     private IzbrisiKlijentaSO izbrisiKlijentaSO;
-     Klijent k;
-    private Repozitorijum mockRepozitorijum; 
+    private IzbrisiKlijentaSO izbrisiKlijentaSO;
+    Klijent k;
+    private Repozitorijum mockRepozitorijum;
 
     public IzbrisiKlijentaSOTest(String testName) {
         super(testName);
     }
 
-    
     @Override
     protected void setUp() throws Exception {
-        
-        mockRepozitorijum=mock(DbRepozitorijumGenericki.class);
+
+        mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         izbrisiKlijentaSO = new IzbrisiKlijentaSO(mockRepozitorijum);
-         
-        k=new Klijent();
-        
+
+        k = new Klijent();
+
     }
 
     @Override
     protected void tearDown() throws Exception {
         izbrisiKlijentaSO = null;
         k = null;
-        mockRepozitorijum=null;
+        mockRepozitorijum = null;
     }
 
     @Test
     public void testPredusloviNullParam() {
-       
+
         Exception exception = assertThrows(Exception.class, () -> {
             izbrisiKlijentaSO.izvrsi(null);
         });
 
         assertEquals("Sistem ne moze da izbrise klijenta", exception.getMessage());
     }
-    
+
     @Test
     public void testPredusloviDrugaKlasa() {
-       
-       Exception exception = assertThrows(Exception.class, () -> {
+
+        Exception exception = assertThrows(Exception.class, () -> {
             izbrisiKlijentaSO.izvrsi(new Usluga());
         });
 
         assertEquals("Sistem ne moze da izbrise klijenta", exception.getMessage());
     }
-    
-     @Test
+
+    @Test
     public void testUspesnaOperacija() throws Exception {
-         Klijent klijent = new Klijent();
-        klijent.setKlijentId(1); 
-        
-        doNothing().when(mockRepozitorijum).izbrisi((Klijent)klijent);
-        
+        Klijent klijent = new Klijent();
+        klijent.setKlijentId(1);
+
+        doNothing().when(mockRepozitorijum).izbrisi((Klijent) klijent);
+
         izbrisiKlijentaSO.izvrsi(klijent);
 
         // Proveri da li je pozvana metoda izbrisi u repozitorijumu
         verify(mockRepozitorijum, times(1)).izbrisi(klijent);
-      
-         
+
     }
-    
+
     
     @Test
-    public void testGreskaUBaziPrilikomBrisanjaKlijenta() throws Exception{
-     
+    public void testGreskaUBaziPrilikomBrisanjaKlijenta() throws Exception {
+
         Klijent klijent = new Klijent();
-        klijent.setKlijentId(1); 
+        klijent.setKlijentId(1);
 
         // Simuliranje greške prilikom brisanja klijenta 
-        doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi((Klijent)klijent);
+        doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi((Klijent) klijent);
 
         //hvatamo izuzetak
         Exception exception = assertThrows(Exception.class, () -> {
@@ -108,11 +106,3 @@ public class IzbrisiKlijentaSOTest extends TestCase {
         verify(mockRepozitorijum, times(1)).izbrisi(klijent);
     }
 }
-        
-    
-    
-    
-    
-    
-
-
