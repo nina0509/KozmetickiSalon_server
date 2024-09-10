@@ -7,6 +7,7 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Statistika;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaStatistike;
@@ -26,7 +27,16 @@ public class ZapamtiStatistikeSO extends OpstaSO {
      */
     public ZapamtiStatistikeSO() {
     }
-
+/**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * ZapamtiStatistikeSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public ZapamtiStatistikeSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
     /**
      * Proverava preduslove za izvršenje operacije. Kod ove sistemske operacije,
      * nema nikakvih preduslova pa je telo metode prazno.

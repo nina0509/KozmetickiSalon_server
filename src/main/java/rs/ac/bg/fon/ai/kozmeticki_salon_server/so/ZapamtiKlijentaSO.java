@@ -27,6 +27,17 @@ public class ZapamtiKlijentaSO extends OpstaSO {
     }
 
     /**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * ZapamtiKlijentaSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public ZapamtiKlijentaSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
+    
+    /**
      * Proverava preduslove za čuvanje ili ažuriranje klijenta. Ako klijent nije
      * validan ili ne ispunjava preduslove, baca izuzetak.
      *
@@ -39,8 +50,10 @@ public class ZapamtiKlijentaSO extends OpstaSO {
     @Override
     protected void preduslovi(Object param) throws Exception {
 
+        if(param==null || !(param instanceof Klijent))throw new Exception("Sistem ne moze da zapamti klijenta");
+
         Klijent k = (Klijent) param;
-        if (k == null || k.getIme().isBlank() || k.getIme() == null || k.getPrezime().isBlank() || k.getPrezime() == null || k.getBrTel().isBlank() || k.getBrTel() == null || k.getDatRodj() == null) {
+        if ( k.getIme() == null || k.getIme().isBlank() || k.getPrezime() == null || k.getPrezime().isBlank() || k.getBrTel() == null || k.getBrTel().isBlank() || k.getDatRodj() == null) {
             throw new Exception("Sistem ne moze da zapamti klijenta");
         }
 

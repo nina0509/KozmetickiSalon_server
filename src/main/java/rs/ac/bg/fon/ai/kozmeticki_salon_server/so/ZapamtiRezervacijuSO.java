@@ -6,6 +6,7 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.Date;
 import java.util.List;
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Popust;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
@@ -25,7 +26,16 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
      */
     public ZapamtiRezervacijuSO() {
     }
-
+/**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * ZapamtiRezervacijuSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public ZapamtiRezervacijuSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
     /**
      * Proverava preduslove za čuvanje ili ažuriranje rezervacije. Ako
      * rezervacija nije validna ili ne ispunjava preduslove, baca izuzetak.
@@ -39,9 +49,13 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
     @Override
     protected void preduslovi(Object param) throws Exception {
 
+        if (param == null || !(param instanceof Rezervacija)) {
+            throw new Exception("Sistem ne moze da zapamti rezervaciju");
+        }
+        
         Rezervacija r = (Rezervacija) param;
-        //r.getDatum().before(new Date()) ||
-        if (r.getKlijent() == null || r.getStavke().isEmpty() || r.getUkupnaCena() <= 0) {
+        
+        if (r.getDatum()==null || r.getKlijent() == null || r.getStavke()==null || r.getStavke().isEmpty() || r.getUkupnaCena() <= 0) {
             throw new Exception("Sistem ne moze da zapamti rezervaciju");
         }
 
@@ -84,11 +98,12 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
 
         java.sql.Date datum = new java.sql.Date(r.getDatum().getTime());
         List<StavkaRezervacije> sveStavke = broker.vratiSve(new StavkaRezervacije(), " JOIN rezervacija ON rezervacija.rezervacijaId=stavkarezervacije.rezervacijaId JOIN usluga ON stavkarezervacije.uslugaId=usluga.uslugaId JOIN tipusluge ON usluga.tipId=tipusluge.tipId JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE rezervacija.datum='" + datum + "'");
-
+     
         for (StavkaRezervacije s : sveStavke) {
             for (StavkaRezervacije sr : r.getStavke()) {
-
+                  
                 if (sr.getUsluga().equals(s.getUsluga()) && s.getVremePocetka().isBefore(sr.getVremeZavrsetka()) && s.getVremeZavrsetka().isAfter(sr.getVremePocetka())) {
+               
                     throw new Exception("Sistem ne moze da doda stavku rezervacije. Termini usluga se preklapaju!");
                 }
             }
@@ -145,14 +160,15 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
      */
     private void izvrsiOperacijuZaAzuriranje(Rezervacija r) throws Exception {
 
+      
         Rezervacija RezBaza = (Rezervacija) (broker.vratiSve(new Rezervacija(), " JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE rezervacija.rezervacijaId=" + r.getRezervacijaId())).get(0);
-
         List<StavkaRezervacije> stavke = broker.vratiSve(new StavkaRezervacije(), " JOIN rezervacija ON rezervacija.rezervacijaId=stavkarezervacije.rezervacijaId JOIN usluga ON stavkarezervacije.uslugaId=usluga.uslugaId JOIN tipusluge ON usluga.tipId=tipusluge.tipId JOIN klijent ON klijent.klijentId=rezervacija.klijentId WHERE rezervacija.rezervacijaId=" + RezBaza.getRezervacijaId());
         RezBaza.setStavke(stavke);
-
+        
         for (StavkaRezervacije s : RezBaza.getStavke()) {
             //ako nova lista ne sadrzi neku iz baze izbrisi je u bazi i smanji br rezervacija usluge
             if (!(r.getStavke().contains(s))) {
+                
                 broker.izbrisi((StavkaRezervacije) s);
                 List<Popust> popusti = broker.vratiSve(new Popust(), " JOIN usluga ON popust.uslugaId=usluga.uslugaId JOIN klijent ON klijent.klijentId=popust.klijentId JOIN tipusluge ON usluga.tipId=tipusluge.tipId WHERE klijent.klijentId=" + r.getKlijent().getKlijentId() + " AND usluga.uslugaId=" + s.getUsluga().getUslugaId());
 

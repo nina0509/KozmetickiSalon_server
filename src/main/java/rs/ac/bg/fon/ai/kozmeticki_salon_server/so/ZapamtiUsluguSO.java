@@ -4,6 +4,7 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
+import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
@@ -21,7 +22,16 @@ public class ZapamtiUsluguSO extends OpstaSO {
      */
     public ZapamtiUsluguSO() {
     }
-
+/**
+     * Konstruktor sa parametrima, kreira novu instancu klase
+     * ZapamtiUsluguSO i postavlja broker na zadatu vrednost.
+     * 
+     * @param broker Novi broker baze podataka.
+     */
+   
+     public ZapamtiUsluguSO(Repozitorijum broker) {
+         this.broker=broker;
+    }
     /**
      * Proverava preduslove za čuvanje usluge. Ako usluga nije validna ili ne
      * ispunjava preduslove, baca izuzetak.
@@ -35,9 +45,12 @@ public class ZapamtiUsluguSO extends OpstaSO {
     @Override
     protected void preduslovi(Object param) throws Exception {
 
+        if (param==null || !(param instanceof Usluga)) {
+            throw new Exception("Sistem ne moze da zapamti uslugu");
+        }
         Usluga u = (Usluga) param;
-        if (u.getNaziv().isBlank() || u.getNaziv() == null || u.getTrajanje() < 0 || u.getTrajanje() > 72000 || u.getCena() < 0 || u.getTip() == null) {
-            throw new Exception("Sistem ne moze da zapamti klijenta");
+        if (u.getNaziv() == null || u.getNaziv().isBlank() || u.getTrajanje() < 0 || u.getTrajanje() > 72000 || u.getCena() < 0 || u.getTip() == null) {
+            throw new Exception("Sistem ne moze da zapamti uslugu");
         }
 
     }
