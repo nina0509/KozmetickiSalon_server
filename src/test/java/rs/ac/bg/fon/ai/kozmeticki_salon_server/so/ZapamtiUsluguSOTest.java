@@ -4,16 +4,15 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
-import java.util.ArrayList;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.db.impl.DbRepozitorijumGenericki;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
@@ -23,25 +22,21 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
  *
  * @author Nikolina Baros
  */
-public class ZapamtiUsluguSOTest extends TestCase {
+public class ZapamtiUsluguSOTest {
 
     private ZapamtiUsluguSO zapamtiUsluguSO;
     Usluga u;
     private Repozitorijum mockRepozitorijum;
 
-    public ZapamtiUsluguSOTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         u = new Usluga();
         zapamtiUsluguSO = new ZapamtiUsluguSO(mockRepozitorijum);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         mockRepozitorijum = null;
         u = null;
         zapamtiUsluguSO = null;
@@ -115,7 +110,7 @@ public class ZapamtiUsluguSOTest extends TestCase {
     @Test
     public void uspesnaOperacija() throws Exception {
 
-        u = new Usluga(1, "manikir", 120, -1200, null);
+        u = new Usluga(1, "manikir", 120, 1200, new TipUsluge());
 
         zapamtiUsluguSO.izvrsi(u);
 
@@ -126,7 +121,7 @@ public class ZapamtiUsluguSOTest extends TestCase {
     @Test
     public void greskaUBazi() throws Exception {
 
-        u = new Usluga(1, "manikir", 120, -1200, null);
+        u = new Usluga(1, "manikir", 120, 1200, new TipUsluge());
 
         doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).sacuvaj(u);
 

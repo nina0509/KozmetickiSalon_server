@@ -7,9 +7,10 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -21,24 +22,20 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.db.impl.DbRepozitor
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
-import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
  *
  * @author ninic
  */
-public class UcitajRezervacijuSOTest extends TestCase {
+public class UcitajRezervacijuSOTest {
 
     private UcitajRezervacijuSO ucitajRezervacijuSO;
     Rezervacija r;
     private Repozitorijum mockRepozitorijum;
     Klijent k;
 
-    public UcitajRezervacijuSOTest(String testName) {
-        super(testName);
-    }
 
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         r = new Rezervacija();
@@ -46,7 +43,7 @@ public class UcitajRezervacijuSOTest extends TestCase {
         ucitajRezervacijuSO = new UcitajRezervacijuSO(mockRepozitorijum);
     }
 
-    @Override
+    @AfterEach
     protected void tearDown() throws Exception {
         mockRepozitorijum = null;
         r = null;

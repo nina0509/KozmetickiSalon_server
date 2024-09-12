@@ -7,8 +7,10 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -26,25 +28,22 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
  *
  * @author Nikolina Baros
  */
-public class ZapamtiStatistikeSOTest extends TestCase {
+public class ZapamtiStatistikeSOTest {
     
      private ZapamtiStatistikeSO zapamtiStatistikeSO;
     Statistika s;
     private Repozitorijum mockRepozitorijum;
+ 
     
-    public ZapamtiStatistikeSOTest(String testName) {
-        super(testName);
-    }
-    
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
          mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         s = new Statistika();
         zapamtiStatistikeSO = new ZapamtiStatistikeSO(mockRepozitorijum);
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         mockRepozitorijum=null;
         s=null;
         zapamtiStatistikeSO=null;

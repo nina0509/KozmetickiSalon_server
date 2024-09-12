@@ -6,11 +6,11 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.ArrayList;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -26,24 +26,21 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
  *
  * @author Nikolina Baros
  */
-public class LoginSOTest extends TestCase {
+public class LoginSOTest {
 
     private LoginSO loginSO;
     Menadzer m;
     private Repozitorijum mockRepozitorijum;
 
-    public LoginSOTest(String testName) {
-        super(testName);
-    }
 
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         loginSO = new LoginSO(mockRepozitorijum);
         m = new Menadzer();
     }
 
-    @Override
+    @AfterEach
     protected void tearDown() throws Exception {
         mockRepozitorijum = null;
         loginSO = null;

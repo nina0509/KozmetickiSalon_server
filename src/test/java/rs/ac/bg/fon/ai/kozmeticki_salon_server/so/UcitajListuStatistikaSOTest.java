@@ -5,11 +5,11 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -18,8 +18,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.db.impl.DbRepozitorijumGenericki;
-import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
-import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Popust;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Statistika;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaStatistike;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.TipUsluge;
@@ -30,24 +28,20 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
  *
  * @author Nikolina Baros
  */
-public class UcitajListuStatistikaSOTest extends TestCase {
+public class UcitajListuStatistikaSOTest {
 
     private UcitajListuStatistikaSO ucitajListuStatistikaSO;
     private Repozitorijum mockRepozitorijum;
     private List<Statistika> lista;
 
-    public UcitajListuStatistikaSOTest(String testName) {
-        super(testName);
-    }
-
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         lista = new ArrayList<>();
         ucitajListuStatistikaSO = new UcitajListuStatistikaSO(mockRepozitorijum);
     }
 
-    @Override
+    @AfterEach
     protected void tearDown() throws Exception {
         mockRepozitorijum = null;
         lista = null;

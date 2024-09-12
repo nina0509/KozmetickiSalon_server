@@ -10,9 +10,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -32,25 +33,22 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
  *
  * @author Nikolina Baros
  */
-public class ZapamtiRezervacijuSOTest extends TestCase {
+public class ZapamtiRezervacijuSOTest{
 
     private ZapamtiRezervacijuSO zapamtiRezervacijuSO;
     Rezervacija r;
     private Repozitorijum mockRepozitorijum;
 
-    public ZapamtiRezervacijuSOTest(String testName) {
-        super(testName);
-    }
 
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         r = new Rezervacija();
         zapamtiRezervacijuSO = new ZapamtiRezervacijuSO(mockRepozitorijum);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         mockRepozitorijum = null;
         r = null;
         zapamtiRezervacijuSO = null;

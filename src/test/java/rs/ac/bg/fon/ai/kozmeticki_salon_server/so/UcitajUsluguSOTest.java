@@ -5,11 +5,11 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -27,25 +27,22 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
  *
  * @author Nikolina Baros
  */
-public class UcitajUsluguSOTest extends TestCase {
+public class UcitajUsluguSOTest {
 
     private UcitajUsluguSO ucitajUsluguSO;
     Usluga u;
     private Repozitorijum mockRepozitorijum;
 
-    public UcitajUsluguSOTest(String testName) {
-        super(testName);
-    }
 
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         u = new Usluga();
         ucitajUsluguSO = new UcitajUsluguSO(mockRepozitorijum);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         mockRepozitorijum = null;
         u = null;
         ucitajUsluguSO = null;

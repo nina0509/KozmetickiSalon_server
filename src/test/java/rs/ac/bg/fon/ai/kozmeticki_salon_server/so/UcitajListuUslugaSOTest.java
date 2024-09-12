@@ -6,9 +6,10 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.ArrayList;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -24,24 +25,21 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
  *
  * @author Nikolina Baros
  */
-public class UcitajListuUslugaSOTest extends TestCase {
+public class UcitajListuUslugaSOTest{
      private UcitajListuUslugaSO ucitajListuUslugaSO;
     private Repozitorijum mockRepozitorijum;
     private List<Usluga> lista;
     
-    public UcitajListuUslugaSOTest(String testName) {
-        super(testName);
-    }
     
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         lista = new ArrayList<>();
         ucitajListuUslugaSO = new UcitajListuUslugaSO(mockRepozitorijum);
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         mockRepozitorijum=null;
         lista=null;
         ucitajListuUslugaSO=null;

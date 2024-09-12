@@ -4,8 +4,10 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -21,18 +23,15 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.*;
  *
  * @author Nikolina Baros
  */
-public class IzbrisiKlijentaSOTest extends TestCase {
+public class IzbrisiKlijentaSOTest {
 
     private IzbrisiKlijentaSO izbrisiKlijentaSO;
     Klijent k;
     private Repozitorijum mockRepozitorijum;
 
-    public IzbrisiKlijentaSOTest(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
+   
+    @BeforeEach
+    public void setUp() throws Exception {
 
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         izbrisiKlijentaSO = new IzbrisiKlijentaSO(mockRepozitorijum);
@@ -41,8 +40,8 @@ public class IzbrisiKlijentaSOTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         izbrisiKlijentaSO = null;
         k = null;
         mockRepozitorijum = null;

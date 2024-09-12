@@ -4,10 +4,11 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
-import java.util.Date;
-import static junit.framework.Assert.assertEquals;
-import junit.framework.TestCase;
+
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -25,25 +26,23 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
  *
  * @author Nikolina Baros
  */
-public class IzbrisiUsluguSOTest extends TestCase {
+public class IzbrisiUsluguSOTest{
 
     private IzbrisiUsluguSO izbrisiUsluguSO;
     Usluga u;
     private Repozitorijum mockRepozitorijum;
 
-    public IzbrisiUsluguSOTest(String testName) {
-        super(testName);
-    }
+    
 
-    @Override
-    protected void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         mockRepozitorijum = mock(DbRepozitorijumGenericki.class);
         izbrisiUsluguSO = new IzbrisiUsluguSO(mockRepozitorijum);
         u = new Usluga();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         mockRepozitorijum = null;
         izbrisiUsluguSO = null;
         u = null;
