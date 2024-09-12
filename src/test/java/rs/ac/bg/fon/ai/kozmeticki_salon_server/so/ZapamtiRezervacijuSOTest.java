@@ -166,6 +166,33 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
 
         assertEquals("Sistem ne moze da zapamti rezervaciju", exception.getMessage());
     }
+    
+     @Test
+    public void testPredusloviDatumUProslosti() {
+
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
+        r.setRezervacijaId(1);
+        r.setUkupnaCena(1200);
+        r.setPojavljivanje(true);
+        r.setKlijent(k);
+        r.setDatum(datum);
+        Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
+        StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MIN, 1200, u);
+
+        List<StavkaRezervacije> stavke = new ArrayList<>();
+        stavke.add(s);
+
+        r.setStavke(stavke);
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            zapamtiRezervacijuSO.izvrsi(new Rezervacija());
+        });
+
+        assertEquals("Sistem ne moze da zapamti rezervaciju", exception.getMessage());
+    }
+
 
     @Test
     public void testUspehDodavanjeRezervacijeKreiranjePopusta() throws Exception {
@@ -348,9 +375,11 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     @Test
     public void testPreklapanjeTermina() throws Exception {
 
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
         //rez id 0 kad dodajemo
-        r = new Rezervacija(0, new Date(), 1200, true, k);
+        r = new Rezervacija(0, datum, 1200, true, k);
         Rezervacija r1 = new Rezervacija(1, new Date(), 1200, true, k);
         Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
         StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u);
@@ -390,8 +419,10 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     @Test
     public void testGreskaUBazi() throws Exception {
 
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        r = new Rezervacija(1, new Date(), 1200, false, k);
+        r = new Rezervacija(1, datum, 1200, false, k);
         Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
         StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MIN, 1200, u);
         List<StavkaRezervacije> stavke = new ArrayList<>();
