@@ -5,7 +5,9 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
@@ -59,7 +61,8 @@ public class NadjiRezervacijeSOTest extends TestCase {
     public void testGetSetRezervacije() {
 
         k = new Klijent(1, "nina", "nina", "0612077777", new Date());
-        Date datum = new Date();
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         r = new Rezervacija(1, datum, 120, true, k);
 
         List<Rezervacija> lista = new ArrayList<>();
@@ -107,7 +110,11 @@ public class NadjiRezervacijeSOTest extends TestCase {
     public void testUspesnaOperacijaPretragaSamoPoImenuKlijenta() throws Exception {
 
         k = new Klijent(1, "nina", "nina", "0612077777", new Date());
-        r = new Rezervacija(1, null, 120, true, k);
+        k.setIme("nina");
+        r.setRezervacijaId(1);
+        r.setKlijent(k);
+        r.setPojavljivanje(true);
+        r.setUkupnaCena(1000);
         List<StavkaRezervacije> stavke = new ArrayList<>();
         r.setStavke(stavke);
         List<Rezervacija> rez = new ArrayList<>();
@@ -128,8 +135,10 @@ public class NadjiRezervacijeSOTest extends TestCase {
 
     @Test
     public void testUspesnaOperacijaPretragaSamoPoDatumu() throws Exception {
-        Date datum = new Date();
-        r = new Rezervacija(1, datum, 120, true, new Klijent(1, "", "", "", datum));
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        
+        r = new Rezervacija(1, datum, 120, true, new Klijent());
         List<StavkaRezervacije> stavke = new ArrayList<>();
         r.setStavke(stavke);
         List<Rezervacija> rez = new ArrayList<>();
@@ -153,8 +162,9 @@ public class NadjiRezervacijeSOTest extends TestCase {
 
     @Test
     public void testUspesnaOperacijaPretragaPoImenuIPoDatumu() throws Exception {
-        Date datum = new Date();
-        r = new Rezervacija(1, datum, 120, true, new Klijent(1, "nina", "", "", datum));
+         Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        r = new Rezervacija(1, datum, 120, true, new Klijent(1, "nina", "nina", "0616277777", new Date()));
         List<StavkaRezervacije> stavke = new ArrayList<>();
         r.setStavke(stavke);
         List<Rezervacija> rez = new ArrayList<>();

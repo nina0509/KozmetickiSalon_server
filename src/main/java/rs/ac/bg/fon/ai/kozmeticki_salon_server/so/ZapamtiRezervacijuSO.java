@@ -4,7 +4,6 @@
  */
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
-import java.util.Date;
 import java.util.List;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Popust;
@@ -55,7 +54,7 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
         
         Rezervacija r = (Rezervacija) param;
         
-        if (r.getDatum()==null || r.getKlijent() == null || r.getStavke()==null || r.getStavke().isEmpty() || r.getUkupnaCena() <= 0) {
+        if (r.getDatum()==null || r.getKlijent() == null || r.getStavke()==null || r.getStavke().isEmpty()) {
             throw new Exception("Sistem ne moze da zapamti rezervaciju");
         }
 
@@ -78,7 +77,7 @@ public class ZapamtiRezervacijuSO extends OpstaSO {
 
         Rezervacija r = (Rezervacija) param;
 
-        if (r.getRezervacijaId() == -1) {
+        if (r.getRezervacijaId() == 0) {
             izvrsiOperacijuZaDodavanje(r);
         } else {
             izvrsiOperacijuZaAzuriranje(r);

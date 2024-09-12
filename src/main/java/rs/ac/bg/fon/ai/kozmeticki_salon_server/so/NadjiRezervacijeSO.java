@@ -69,7 +69,7 @@ public class NadjiRezervacijeSO extends OpstaSO {
         String uslov = " JOIN klijent ON klijent.klijentId=rezervacija.klijentId";
         String uslov1 = null;
 
-        if (r != null && r.getKlijent() != null && !r.getKlijent().getIme().isBlank()) {
+        if (r != null && r.getKlijent() != null && r.getKlijent().getIme()!=null && !r.getKlijent().getIme().isBlank()) {
             uslov1 = " WHERE klijent.ime LIKE '%" + r.getKlijent().getIme() + "%'";
         }
 

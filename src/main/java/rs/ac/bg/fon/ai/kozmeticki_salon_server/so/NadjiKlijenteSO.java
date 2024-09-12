@@ -73,11 +73,11 @@ public class NadjiKlijenteSO extends OpstaSO {
             return;
         }
 
-        if (!k.getIme().isBlank() && k.getIme() != null) {
+        if (k.getIme() != null && !k.getIme().isBlank() ) {
             uslov = " WHERE klijent.ime LIKE '%" + k.getIme() + "%'";
         }
 
-        if (!k.getPrezime().isBlank() && k.getPrezime() != null) {
+        if (k.getPrezime() != null && !k.getPrezime().isBlank()) {
 
             if (uslov != null) {
                 uslov += " AND klijent.prezime LIKE '%" + k.getPrezime() + "%'";

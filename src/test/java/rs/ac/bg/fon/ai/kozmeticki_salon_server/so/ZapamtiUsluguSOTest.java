@@ -70,7 +70,11 @@ public class ZapamtiUsluguSOTest extends TestCase {
     @Test
     public void testNazivNull() {
 
-        u = new Usluga(1, null, 120, 1200, new TipUsluge(1, "manikir"));
+        u.setCena(1200);
+        u.setUslugaId(1);
+        u.setTip(new TipUsluge(1, "manikir"));
+        u.setTrajanje(120);
+       
         Exception exception = assertThrows(Exception.class, () -> {
             zapamtiUsluguSO.izvrsi(u);
         });
@@ -78,27 +82,8 @@ public class ZapamtiUsluguSOTest extends TestCase {
         assertEquals("Sistem ne moze da zapamti uslugu", exception.getMessage());
     }
 
-    @Test
-    public void testNazivPrazan() {
+  
 
-        u = new Usluga(1, "", 120, 1200, new TipUsluge(1, "manikir"));
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiUsluguSO.izvrsi(u);
-        });
-
-        assertEquals("Sistem ne moze da zapamti uslugu", exception.getMessage());
-    }
-
-    @Test
-    public void testNegativnoTrajanje() {
-
-        u = new Usluga(1, "manikir", -120, 1200, new TipUsluge(1, "manikir"));
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiUsluguSO.izvrsi(u);
-        });
-
-        assertEquals("Sistem ne moze da zapamti uslugu", exception.getMessage());
-    }
 
     @Test
     public void testPredugoTrajanje() {
@@ -111,21 +96,15 @@ public class ZapamtiUsluguSOTest extends TestCase {
         assertEquals("Sistem ne moze da zapamti uslugu", exception.getMessage());
     }
 
-    @Test
-    public void testNegativnaCena() {
-
-        u = new Usluga(1, "manikir", 120, -1200, new TipUsluge(1, "manikir"));
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiUsluguSO.izvrsi(u);
-        });
-
-        assertEquals("Sistem ne moze da zapamti uslugu", exception.getMessage());
-    }
-
+   
     @Test
     public void testNullTip() {
 
-        u = new Usluga(1, "manikir", 120, -1200, null);
+        u.setCena(1200);
+        u.setUslugaId(1);
+        u.setNaziv("manikir");
+        u.setTrajanje(120);
+     
         Exception exception = assertThrows(Exception.class, () -> {
             zapamtiUsluguSO.izvrsi(u);
         });

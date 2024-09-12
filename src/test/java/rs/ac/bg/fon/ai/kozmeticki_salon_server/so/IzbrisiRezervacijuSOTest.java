@@ -6,7 +6,9 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
@@ -26,7 +28,6 @@ import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Popust;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.StavkaRezervacije;
-import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.TipUsluge;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
 /**
@@ -166,7 +167,9 @@ public class IzbrisiRezervacijuSOTest extends TestCase {
     @Test
     public void testGreskaUBaziPrilikomBrisanjaRezervacije() throws Exception {
 
-        r = new Rezervacija(1, new Date(), 120, true, new Klijent());
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        r = new Rezervacija(1, datum, 120, true, new Klijent());
 
         // Simuliranje greške prilikom brisanja 
         doThrow(new Exception("Greška u bazi")).when(mockRepozitorijum).izbrisi((Rezervacija) r);
@@ -186,8 +189,10 @@ public class IzbrisiRezervacijuSOTest extends TestCase {
     @Test
     public void testGreskaUBaziPrilikomBrisanjaStavki() throws Exception {
 
-        r = new Rezervacija(1, new Date(), 120, true, new Klijent());
-        StavkaRezervacije sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 120, null);
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        r = new Rezervacija(1, datum, 120, true, new Klijent());
+        StavkaRezervacije sr = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 120, new Usluga());
         List<StavkaRezervacije> stavke = new ArrayList<>();
         stavke.add(sr);
         r.setStavke(stavke);

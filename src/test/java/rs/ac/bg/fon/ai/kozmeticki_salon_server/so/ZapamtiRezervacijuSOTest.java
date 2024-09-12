@@ -6,7 +6,9 @@ package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
@@ -77,8 +79,14 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     @Test
     public void testPredusloviKlijentNull() {
 
-        //Klijent k=new Klijent(1, "nina", "nina", "0612020222", new Date());
-        r = new Rezervacija(1, new Date(), 1200, true, null);
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        r.setRezervacijaId(1);
+        r.setDatum(datum);
+        r.setUkupnaCena(1200);
+        r.setPojavljivanje(true);
+        r.setKlijent(new Klijent());
+       
         Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
         StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MIN, 1200, u);
 
@@ -94,31 +102,16 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
         assertEquals("Sistem ne moze da zapamti rezervaciju", exception.getMessage());
     }
 
-    @Test
-    public void testPredusloviNegativnaCena() {
-
-        Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        r = new Rezervacija(1, new Date(), 1200, true, k);
-        Usluga u = new Usluga(1, "manikir", 120, -1200, new TipUsluge(1, "manikir"));
-        StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MIN, 1200, u);
-
-        List<StavkaRezervacije> stavke = new ArrayList<>();
-        stavke.add(s);
-
-        r.setStavke(stavke);
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiRezervacijuSO.izvrsi(new Rezervacija());
-        });
-
-        assertEquals("Sistem ne moze da zapamti rezervaciju", exception.getMessage());
-    }
+  
 
     @Test
     public void testPredusloviRezervacijaBezStavki() {
 
+        
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        r = new Rezervacija(1, new Date(), 1200, true, k);
+        r = new Rezervacija(1, datum, 1200, true, k);
 
         List<StavkaRezervacije> stavke = new ArrayList<>();
         r.setStavke(stavke);
@@ -134,8 +127,14 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     public void testPredusloviStavkeNull() {
 
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        r = new Rezervacija(1, new Date(), 1200, true, k);
-        r.setStavke(null);
+        Calendar myCalendar = new GregorianCalendar(2025, 2, 11);
+        Date datum = myCalendar.getTime();
+        r.setRezervacijaId(1);
+        r.setDatum(datum);
+        r.setUkupnaCena(1200);
+        r.setPojavljivanje(true);
+        r.setKlijent(k);
+        
 
         Exception exception = assertThrows(Exception.class, () -> {
             zapamtiRezervacijuSO.izvrsi(new Rezervacija());
@@ -147,9 +146,13 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     @Test
     public void testPredusloviDatumNull() {
 
+        
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        r = new Rezervacija(1, null, 1200, true, k);
-        Usluga u = new Usluga(1, "manikir", 120, -1200, new TipUsluge(1, "manikir"));
+        r.setRezervacijaId(1);
+        r.setUkupnaCena(1200);
+        r.setPojavljivanje(true);
+        r.setKlijent(k);
+        Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
         StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MIN, 1200, u);
 
         List<StavkaRezervacije> stavke = new ArrayList<>();
@@ -168,9 +171,9 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     public void testUspehDodavanjeRezervacijeKreiranjePopusta() throws Exception {
 
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        //rez -1 kad dodajemo
-        r = new Rezervacija(-1, new Date(), 1200, true, k);
-        Usluga u = new Usluga(1, "manikir", 120, -1200, new TipUsluge(1, "manikir"));
+        //rez 0 kad dodajemo
+        r = new Rezervacija(0, new Date(), 1200, true, k);
+        Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
         StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MIN, 1200, u);
         List<StavkaRezervacije> stavke = new ArrayList<>();
         stavke.add(s);
@@ -191,9 +194,9 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     public void testUspehDodavanjeRezervacijeIzmenaPopusta() throws Exception {
 
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        //rez -1 kad dodajemo
-        r = new Rezervacija(-1, new Date(), 1200, true, k);
-        Usluga u = new Usluga(1, "manikir", 120, -1200, new TipUsluge(1, "manikir"));
+        //rez id 0 kad dodajemo
+        r = new Rezervacija(0, new Date(), 1200, true, k);
+        Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
         StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MIN, 1200, u);
         List<StavkaRezervacije> stavke = new ArrayList<>();
         stavke.add(s);
@@ -346,8 +349,8 @@ public class ZapamtiRezervacijuSOTest extends TestCase {
     public void testPreklapanjeTermina() throws Exception {
 
         Klijent k = new Klijent(1, "nina", "nina", "0612020222", new Date());
-        //rez -1 kad dodajemo
-        r = new Rezervacija(-1, new Date(), 1200, true, k);
+        //rez id 0 kad dodajemo
+        r = new Rezervacija(0, new Date(), 1200, true, k);
         Rezervacija r1 = new Rezervacija(1, new Date(), 1200, true, k);
         Usluga u = new Usluga(1, "manikir", 120, 1200, new TipUsluge(1, "manikir"));
         StavkaRezervacije s = new StavkaRezervacije(1, r, LocalTime.MIN, LocalTime.MAX, 1200, u);

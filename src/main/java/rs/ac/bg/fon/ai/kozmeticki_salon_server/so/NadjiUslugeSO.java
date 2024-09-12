@@ -67,7 +67,7 @@ public class NadjiUslugeSO extends OpstaSO {
         String uslov = " JOIN tipusluge on tipusluge.tipId=usluga.tipId";
         String uslov1 = null;
 
-        if (u != null && !u.getNaziv().isBlank() && u.getNaziv() != null) {
+        if (u != null && u.getNaziv() != null && !u.getNaziv().isBlank() ) {
             uslov1 = " WHERE usluga.naziv LIKE '%" + u.getNaziv() + "%'";
         }
 

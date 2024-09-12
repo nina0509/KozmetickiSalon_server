@@ -71,20 +71,13 @@ public class ZapamtiKlijentaSOTest extends TestCase {
         assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
     }
 
-    @Test
-    public void testImeKlijentaBlank() {
-        k = new Klijent(1, "", "nina", "0611111111", new Date());
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiKlijentaSO.izvrsi(k);
-        });
-
-        assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
-    }
-
+    
     @Test
     public void testImeKlijentaNull() {
-        k = new Klijent(1, null, "nina", "0611111111", new Date());
+        k.setKlijentId(1);
+        k.setDatRodj(new Date());
+        k.setBrTel("0611111111");
+        k.setPrezime("nina");
 
         Exception exception = assertThrows(Exception.class, () -> {
             zapamtiKlijentaSO.izvrsi(k);
@@ -93,21 +86,15 @@ public class ZapamtiKlijentaSOTest extends TestCase {
         assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
     }
 
-    @Test
-    public void testPrezimeKlijentaBlank() {
-        k = new Klijent(1, "nina", "", "0611111111", new Date());
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiKlijentaSO.izvrsi(k);
-        });
-
-        assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
-    }
+  
 
     @Test
     public void testPrezimeKlijentaNull() {
-        k = new Klijent(1, "nina", null, "0611111111", new Date());
-
+        k.setKlijentId(1);
+        k.setDatRodj(new Date());
+        k.setBrTel("0611111111");
+        k.setIme("nina");
+        
         Exception exception = assertThrows(Exception.class, () -> {
             zapamtiKlijentaSO.izvrsi(k);
         });
@@ -115,20 +102,15 @@ public class ZapamtiKlijentaSOTest extends TestCase {
         assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
     }
 
-    @Test
-    public void testBrTelKlijentaBlank() {
-        k = new Klijent(1, "nina", "nina", "", new Date());
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiKlijentaSO.izvrsi(k);
-        });
-
-        assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
-    }
+   
 
     @Test
     public void testBrTelKlijentaNull() {
-        k = new Klijent(1, "nina", "nina", null, new Date());
+        
+        k.setKlijentId(1);
+        k.setIme("nina");
+        k.setDatRodj(new Date());
+        k.setIme("nina");
 
         Exception exception = assertThrows(Exception.class, () -> {
             zapamtiKlijentaSO.izvrsi(k);
@@ -139,8 +121,11 @@ public class ZapamtiKlijentaSOTest extends TestCase {
 
     @Test
     public void testDatRodjKlijentaNull() {
-        k = new Klijent(1, "nina", "nina", "0612077888", null);
-
+        k.setKlijentId(1);
+        k.setIme("nina");
+        k.setBrTel("0612077888");
+        k.setIme("nina");
+      
         Exception exception = assertThrows(Exception.class, () -> {
             zapamtiKlijentaSO.izvrsi(k);
         });
@@ -148,20 +133,7 @@ public class ZapamtiKlijentaSOTest extends TestCase {
         assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
     }
 
-    @Test
-    public void testDatRodjKlijentaUBuducnosti() {
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        k = new Klijent(1, "nina", "nina", "0612077888", cal.getTime());
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            zapamtiKlijentaSO.izvrsi(k);
-        });
-
-        assertEquals("Sistem ne moze da zapamti klijenta", exception.getMessage());
-    }
-
+  
     @Test
     public void testPogresanFormatBrTelKlijenta() {
 

@@ -5,7 +5,6 @@
 package rs.ac.bg.fon.ai.kozmeticki_salon_server.so;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
@@ -19,7 +18,6 @@ import static org.mockito.Mockito.when;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.Repozitorijum;
 import rs.ac.bg.fon.ai.kozmeticki_salon_server.repozitorijum.db.impl.DbRepozitorijumGenericki;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Klijent;
-import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Rezervacija;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.TipUsluge;
 import rs.ac.bg.fon.ai.kozmeticki_salon_zajednicki.domen.Usluga;
 
@@ -94,7 +92,11 @@ public class NadjiUslugeSOTest extends TestCase {
     @Test
     public void testUspesnaOperacijaPretragaSamoPoNazivu() throws Exception {
 
-        u = new Usluga(1, "manikir", 120, 1200, null);
+       
+        u.setUslugaId(1);
+        u.setNaziv("manikir");
+        u.setTrajanje(120);
+        u.setCena(1200);
         List<Usluga> lista = new ArrayList<>();
         lista.add(u);
 
@@ -112,7 +114,10 @@ public class NadjiUslugeSOTest extends TestCase {
     @Test
     public void testUspesnaOperacijaPretragaSamoPoTipu() throws Exception {
 
-        u = new Usluga(1, "", 120, 1200, new TipUsluge(1, "manikir"));
+       
+        u.setTip(new TipUsluge(1, "manikir"));
+        u.setTrajanje(120);
+        u.setCena(1200);
         List<Usluga> lista = new ArrayList<>();
         lista.add(u);
 

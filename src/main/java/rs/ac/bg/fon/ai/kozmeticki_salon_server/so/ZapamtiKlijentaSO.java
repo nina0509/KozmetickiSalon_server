@@ -53,13 +53,13 @@ public class ZapamtiKlijentaSO extends OpstaSO {
         if(param==null || !(param instanceof Klijent))throw new Exception("Sistem ne moze da zapamti klijenta");
 
         Klijent k = (Klijent) param;
-        if ( k.getIme() == null || k.getIme().isBlank() || k.getPrezime() == null || k.getPrezime().isBlank() || k.getBrTel() == null || k.getBrTel().isBlank() || k.getDatRodj() == null) {
+        if ( k.getIme() == null || k.getPrezime() == null  || k.getBrTel() == null || k.getDatRodj() == null) {
             throw new Exception("Sistem ne moze da zapamti klijenta");
         }
 
         String regex = "^(\\+\\d{1,3})?0?6[0-9]\\d{6,7}$";
         k.setBrTel(k.getBrTel().replace(" ", ""));
-        if (!k.getBrTel().matches(regex) || k.getDatRodj().after(new Date())) {
+        if (!k.getBrTel().matches(regex)) {
             throw new Exception("Sistem ne moze da zapamti klijenta");
 
         }

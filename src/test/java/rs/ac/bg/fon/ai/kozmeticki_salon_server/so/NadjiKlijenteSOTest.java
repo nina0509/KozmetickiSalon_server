@@ -90,7 +90,9 @@ public class NadjiKlijenteSOTest extends TestCase {
     @Test
     public void testUspesnaOperacijaPretragaSamoPoImenu() throws Exception {
 
-        k = new Klijent(1, "nina", "", "0612077777", new Date());
+        k.setKlijentId(1);
+        k.setIme("nina");
+ 
         List<Klijent> klijenti = new ArrayList<>();
         klijenti.add(k);
         String uslov = " WHERE klijent.ime LIKE '%" + k.getIme() + "%'";
@@ -105,7 +107,8 @@ public class NadjiKlijenteSOTest extends TestCase {
     @Test
     public void testUspesnaOperacijaPretragaSamoPoPrezimenu() throws Exception {
 
-        k = new Klijent(1, "", "nina", "0612077777", new Date());
+        k.setKlijentId(1);
+        k.setPrezime("nina");
         List<Klijent> klijenti = new ArrayList<>();
         klijenti.add(k);
         String uslov = " WHERE klijent.prezime LIKE '%" + k.getPrezime() + "%'";
